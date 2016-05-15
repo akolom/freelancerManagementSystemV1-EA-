@@ -4,34 +4,22 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue(value = "freelancer")
 public class Freelancer extends User {
 
-//	@Id
-//	@GeneratedValue
-//
-//	private Integer freelancer_id;
-
 	private Double charge;
 
 	private Double jobCompleted;
 
-	@OneToOne
-	@JoinColumn(name = "freelancer_credentials")
-	private Credentials credentials;
-
 	@OneToMany
 	@JoinColumn(name = "freelancer_experiances")
-	private List<Experiance> experiances;
+	private List<Experience> experiances;
 
 	@OneToMany
 	@JoinColumn(name = "freelancer_education")
@@ -40,12 +28,20 @@ public class Freelancer extends User {
 	@ManyToMany
 	@JoinTable
 	private List<Project> projects;
+	
+	@OneToMany
+	@JoinColumn
+	private List<Certifications> certifications;
+	
+	@OneToMany
+	@JoinColumn
+	private List<Skills> skills;
 
-	public List<Experiance> getExperiances() {
+	public List<Experience> getExperiances() {
 		return experiances;
 	}
 
-	public void setExperiances(List<Experiance> experiances) {
+	public void setExperiances(List<Experience> experiances) {
 		this.experiances = experiances;
 	}
 
@@ -64,22 +60,6 @@ public class Freelancer extends User {
 	public void setEducations(List<Education> educations) {
 		this.educations = educations;
 	}
-
-	public Credentials getCredentials() {
-		return credentials;
-	}
-
-	public void setCredentials(Credentials credentials) {
-		this.credentials = credentials;
-	}
-
-//	public Integer getFreelancer_id() {
-//		return freelancer_id;
-//	}
-//
-//	public void setFreelancer_id(Integer freelancer_id) {
-//		this.freelancer_id = freelancer_id;
-//	}
 
 	public Double getCharge() {
 		return charge;
