@@ -13,12 +13,11 @@ import com.ea.neon.service.impl.UserServiceImpl;
 @Controller
 public class HomeController {
 
-	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping({ "/", "/index" })
 	public String home() {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("context/applicationContext.xml");
-		UserService userService = (UserService) ctx.getBean("userServiceImpl");
 		User user = new User();
 		user.setFirstName("John");
 		user.setLastName("Doe");

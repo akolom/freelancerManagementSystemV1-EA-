@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -12,32 +13,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	
+
 	private String email;
-	
+
 	private String firstName;
-	
+
 	private String lastName;
-	
+
 	private String contact;
 
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy = "user")
 	private List<Address> addresses;
-	
-	
-	
-	
+
 	@OneToOne
-	@JoinColumn(name="user_credentials")
+	@JoinColumn(name = "user_credentials")
 	private Credentials credentials;
-	
+
 	public List<Address> getAddresses() {
 		return addresses;
 	}
@@ -47,9 +44,8 @@ public class User {
 	}
 
 	@OneToOne
-	@JoinColumn(name="user_profile")
+	@JoinColumn(name = "user_profile")
 	private Profile profile;
-	
 
 	public Profile getProfile() {
 		return profile;
@@ -59,16 +55,13 @@ public class User {
 		this.profile = profile;
 	}
 
-	
 	public Credentials getCredentials() {
 		return credentials;
 	}
 
-
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -109,7 +102,5 @@ public class User {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
-	
-	
-	
+
 }
