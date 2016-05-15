@@ -1,53 +1,33 @@
 package com.ea.neon.domain;
 
+import java.util.List;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-@DiscriminatorValue(value="employeer")
+@DiscriminatorValue(value = "employeer")
 public class Employer extends User {
-//
-//	@Id
-//	@GeneratedValue
-//	private Integer emp_id;
-	
+	//
+	// @Id
+	// @GeneratedValue
+	// private Integer emp_id;
+
 	private Integer projectCompleted;
 
-	
-	@ManyToOne
-	@JoinColumn(name="employeer_project")
-	private Project project;
-	
-	
-	
-	public Project getProject() {
-		return project;
-	}
+	@OneToMany(mappedBy = "employer")
+	private List<Project> project;
 
-
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
-
-
-
-
-//	public Integer getEmp_id() {
-//		return emp_id;
-//	}
-//
-//
-//
-//	public void setEmp_id(Integer emp_id) {
-//		this.emp_id = emp_id;
-//	}
-
-
+	// public Integer getEmp_id() {
+	// return emp_id;
+	// }
+	//
+	//
+	//
+	// public void setEmp_id(Integer emp_id) {
+	// this.emp_id = emp_id;
+	// }
 
 	public Integer getProjectCompleted() {
 		return projectCompleted;
@@ -56,6 +36,13 @@ public class Employer extends User {
 	public void setProjectCompleted(Integer projectCompleted) {
 		this.projectCompleted = projectCompleted;
 	}
-	
-	
+
+	public List<Project> getProject() {
+		return project;
+	}
+
+	public void setProject(List<Project> project) {
+		this.project = project;
+	}
+
 }

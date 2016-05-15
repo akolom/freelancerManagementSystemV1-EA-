@@ -6,7 +6,7 @@
 
 	<security:http use-expressions="true">
 		<security:intercept-url pattern="/asdf/**"
-			access="hasAnyRole([ROLE_ADMIN, ROLE_USER])" />
+			access="ROLE_ADMIN" />
 		<security:form-login login-page="/login" />
 		<security:logout logout-url="/logout" />
 		<security:csrf disabled="true" />
