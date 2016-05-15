@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @DiscriminatorValue(value="employeer")
-public class Employeer extends User {
+public class Employer extends User {
 //
 //	@Id
 //	@GeneratedValue
