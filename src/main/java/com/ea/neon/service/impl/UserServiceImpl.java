@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ea.neon.dao.UserDao;
 import com.ea.neon.domain.User;
+import com.ea.neon.repository.UserRepository;
 import com.ea.neon.service.UserService;
 
 @Service
@@ -16,36 +16,26 @@ import com.ea.neon.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserDao userDao;
-
-
+	private UserRepository userRepository;
+	
 	public void save(User user) {
-		
-  		
-		userDao.save(user);
+		userRepository.save(user);
 	}
 	public List<User> findAll() {
-		return (List<User>) userDao.findAll();
+		return userRepository.findAll();
 	}
 
 	public User findByEmail(String email) {
-		return userDao.findByEmail(email);
+		return userRepository.findOneByEmail(email);
 	}
 
 	public User update(User user) {
 		try {
-			return userDao.update(user);
+			return userRepository.save(user);
 		} catch (StaleObjectStateException e) {
 			System.out.println(e);
 			return null;
 		}
-	}
-
-	public User testRefresh(User user) {
-		user.setEmail("Lotta@Doe.com");
-		userDao.save(user);
-
-		return user;
 	}
 
 }
