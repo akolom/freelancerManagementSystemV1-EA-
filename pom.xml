@@ -179,11 +179,8 @@
 	<build>
 		<plugins>
 
-		<plugin>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-maven-plugin</artifactId>
-			<version>9.3.9.M1</version>
-		</plugin>
+		
+		
 		<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
