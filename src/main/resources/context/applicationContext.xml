@@ -56,4 +56,6 @@
 		transaction-manager-ref="transactionManager" />
 
 
+	<import resource="security.xml" />
+
 </beans>
