@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Project {
@@ -19,16 +20,42 @@ public class Project {
 
 	private String name;
 
-	private String budget;
+	private Double budget;
 
 	private String description;
 
+	@OneToOne
+	@JoinColumn
+	private Status status;
+	
 	@ManyToMany(mappedBy = "projects")
 	private List<Freelancer> freelancers;
 
 	@ManyToOne
 	@JoinColumn
 	private Employer employer;
+	
+	
+	@OneToOne
+	@JoinColumn
+	private Category category;
+
+	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 	public List<Freelancer> getFreelancers() {
 		return freelancers;
@@ -54,11 +81,11 @@ public class Project {
 		this.name = name;
 	}
 
-	public String getBudget() {
+	public Double getBudget() {
 		return budget;
 	}
 
-	public void setBudget(String budget) {
+	public void setBudget(Double budget) {
 		this.budget = budget;
 	}
 

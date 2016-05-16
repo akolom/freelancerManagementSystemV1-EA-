@@ -9,25 +9,11 @@ import javax.persistence.OneToMany;
 @Entity
 @DiscriminatorValue(value = "employeer")
 public class Employer extends User {
-	//
-	// @Id
-	// @GeneratedValue
-	// private Integer emp_id;
 
 	private Integer projectCompleted;
 
 	@OneToMany(mappedBy = "employer")
 	private List<Project> project;
-
-	// public Integer getEmp_id() {
-	// return emp_id;
-	// }
-	//
-	//
-	//
-	// public void setEmp_id(Integer emp_id) {
-	// this.emp_id = emp_id;
-	// }
 
 	public Integer getProjectCompleted() {
 		return projectCompleted;

@@ -11,7 +11,22 @@ public class Skills {
 	@GeneratedValue
 	private Integer id;
 	
-	private String skills;
+	public enum SkillTitle{
+		JAVA, HTML_HTML5, PHP, JAVASCRIPT, MYSQL, C_PROGRAMMING, JQUERY,
+		C_PLUS_PLUS, C_SHARP, PYTHON, ANDROID, GRAPHIC_DESIGN, SPRING_MVC; 
+	};
+	
+	private SkillTitle skillTitle;
+	
+	
+
+	public SkillTitle getSkillTitle() {
+		return skillTitle;
+	}
+
+	public void setSkillTitle(SkillTitle skillTitle) {
+		this.skillTitle = skillTitle;
+	}
 
 	public Integer getId() {
 		return id;
@@ -20,15 +35,6 @@ public class Skills {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getSkills() {
-		return skills;
-	}
-
-	public void setSkills(String skills) {
-		this.skills = skills;
-	}
-	
 	
 	
 	
