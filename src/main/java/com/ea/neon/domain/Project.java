@@ -1,18 +1,25 @@
 package com.ea.neon.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Project {
+public class Project implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5180380150346197569L;
 
 	@Id
 	@GeneratedValue
@@ -24,23 +31,21 @@ public class Project {
 
 	private String description;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn
 	private Status status;
-	
-	@ManyToMany(mappedBy = "projects")
+
+	@ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	private List<Freelancer> freelancers;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn
 	private Employer employer;
-	
-	
-	@OneToOne
+
+	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn
 	private Category category;
 
-	
 	public Status getStatus() {
 		return status;
 	}

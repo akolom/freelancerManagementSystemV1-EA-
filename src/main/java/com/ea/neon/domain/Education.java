@@ -1,25 +1,30 @@
 package com.ea.neon.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-
 @Entity
-public class Education {
-	
-	
+public class Education implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6552593704853110704L;
+
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	 private String country;
-	 
-	 private String degree;
-	 
-	 private String startYear;
-	 
-	 private String endYear;
+
+	private String country;
+
+	private String degree;
+
+	private String startYear;
+
+	private String endYear;
 
 	public Integer getId() {
 		return id;
@@ -60,7 +65,5 @@ public class Education {
 	public void setEndYear(String endYear) {
 		this.endYear = endYear;
 	}
-	 
-	 
 
 }

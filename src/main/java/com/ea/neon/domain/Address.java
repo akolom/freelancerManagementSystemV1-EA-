@@ -1,90 +1,98 @@
 package com.ea.neon.domain;
 
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.ManyToAny;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
-public class Address {
-@Id
-@GeneratedValue
-private Integer id;
+public class Address implements Serializable {
 
-private String city;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1979047134507352274L;
 
-private String state;
+	@Id
+	@GeneratedValue
+	private Integer id;
 
-private String zip;
+	private String city;
 
-private String country;
+	private String state;
 
-private String street;
+	private String zip;
 
-@ManyToOne
-@JoinColumn(name="address_user")
-private User user;
+	private String country;
 
-public User getUser() {
-	return user;
-}
+	private String street;
 
-public void setUser(User user) {
-	this.user = user;
-}
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+	@JoinColumn(name = "address_user")
+	private User user;
 
-public Integer getId() {
-	return id;
-}
+	public User getUser() {
+		return user;
+	}
 
-public void setId(Integer id) {
-	this.id = id;
-}
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-public String getCity() {
-	return city;
-}
+	public Integer getId() {
+		return id;
+	}
 
-public void setCity(String city) {
-	this.city = city;
-}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-public String getState() {
-	return state;
-}
+	public String getCity() {
+		return city;
+	}
 
-public void setState(String state) {
-	this.state = state;
-}
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-public String getZip() {
-	return zip;
-}
+	public String getState() {
+		return state;
+	}
 
-public void setZip(String zip) {
-	this.zip = zip;
-}
+	public void setState(String state) {
+		this.state = state;
+	}
 
-public String getCountry() {
-	return country;
-}
+	public String getZip() {
+		return zip;
+	}
 
-public void setCountry(String country) {
-	this.country = country;
-}
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
 
-public String getStreet() {
-	return street;
-}
+	public String getCountry() {
+		return country;
+	}
 
-public void setStreet(String street) {
-	this.street = street;
-}
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
+	public String getStreet() {
+		return street;
+	}
 
+	public void setStreet(String street) {
+		this.street = street;
+	}
 
 }

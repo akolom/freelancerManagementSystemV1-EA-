@@ -7,5 +7,5 @@ import com.ea.neon.domain.User;
 public interface UserRepository extends JpaRepository<User, Integer>{
 	
 	User findOneByEmail(String email);
-
+	
 }

@@ -1,21 +1,27 @@
 package com.ea.neon.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Experience {
+public class Experience implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5023806558492939974L;
 
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	
+
 	private String companyName;
-	
+
 	private String title;
-	
+
 	private Double years;
 
 	private String summary;
@@ -59,6 +65,5 @@ public class Experience {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-	
-	
+
 }
