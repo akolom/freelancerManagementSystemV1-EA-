@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ea.neon.domain.Category.CategoryTitle;
 import com.ea.neon.domain.Employer;
 import com.ea.neon.domain.Project;
+import com.ea.neon.domain.Skills.SkillTitle;
 import com.ea.neon.repository.FreelancerRepository;
 import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.service.ProjectService;
@@ -36,6 +38,21 @@ public class ProjectServiceImpl implements ProjectService {
 		 * project.getId())); }
 		 */
 		return projects;
+	
+	@Override
+	public List<Project> findBySelection(List<SkillTitle> skillTitles, CategoryTitle categoryTitle, Double minBudget, Double maxBudget) {
+		return projectRepository.findBySelections(skillTitles, categoryTitle, minBudget, maxBudget);
+	}
+
+	@Override
+	public List<Project> findByTitleAndDesc(String search) {
+		return projectRepository.findByDescAndTitle(search);
+	}
+
+	@Override
+	public List<Project> findAll() {
+		// TODO Auto-generated method stub
+		return projectRepository.findAll();
 	}
 
 }

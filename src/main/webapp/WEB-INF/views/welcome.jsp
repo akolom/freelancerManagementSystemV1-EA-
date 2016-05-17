@@ -16,7 +16,7 @@
   					Welcome  ${member.firstName} !
  
 			</div>	 
- 
+ 	<a href="<spring:url value="/products/all.html" />" class="btn btn-default pull-right">Product List :)</a>	
 				  <div class="container">
 					<c:choose>
 					    <c:when test="${empty member}">

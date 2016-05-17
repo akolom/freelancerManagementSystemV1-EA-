@@ -29,11 +29,15 @@ import com.ea.neon.repository.ProfileRepository;
 import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.repository.SkillsRepository;
 import com.ea.neon.repository.UserRepository;
+import com.ea.neon.service.UserService;
 
 @Service
 @Transactional
 public class InitServiceImpl {
 
+	@Autowired
+	UserService userService;
+	
 	@Autowired
 	UserRepository userRepo;
 
@@ -92,7 +96,22 @@ public class InitServiceImpl {
 		user.setEmail("jobs@gmail.com");
 
 		userRepo.save(user);
-
+		
+		Freelancer keshav = new Freelancer();
+		keshav.setFirstName("Keshav");
+		keshav.setLastName("Shai");
+		userRepo.save(keshav);
+		
+		Freelancer sabeen = new Freelancer();
+		sabeen.setFirstName("Sabeen");
+		sabeen.setLastName("Pradhan");
+		sabeen.setProjects(new ArrayList<>());
+		userRepo.save(sabeen);
+		
+		List<Freelancer> freelancers = new ArrayList<>();
+		freelancers.add(sabeen);
+		freelancers.add(keshav);
+		
 		Skills skillsAndroid = new Skills();
 		skillsAndroid.setSkillTitle(SkillTitle.ANDROID);
 		skillsRepository.save(skillsAndroid);
@@ -112,12 +131,42 @@ public class InitServiceImpl {
 		Freelancer freelancer = new Freelancer();
 		freelancer.setFirstName("freelancer");
 
-		List<Freelancer> freelancers = Arrays.asList(freelancer);
 
+		skillsJAVA.setSkillTitle(SkillTitle.JAVA);
+		skillsRepository.save(skillsJAVA);	
+		
+
+		Skills skillsGraphic = new Skills();
+		skillsGraphic.setSkillTitle(SkillTitle.GRAPHIC_DESIGN);
+		skillsRepository.save(skillsGraphic);
+		
+
+		List<Skills> skillsJAVAandAndroid = new ArrayList<>();
+		skillsJAVAandAndroid.add(skillsJAVA);
+		skillsJAVAandAndroid.add(skillsAndroid);
+		
+		List<Skills> skillsGraphics = new ArrayList<>();
+		skillsGraphics.add(skillsGraphic);
+		
+		
+		List<SkillTitle> skillTitlesAndroidJAVA = new ArrayList<>();
+		skillTitlesAndroidJAVA.add(SkillTitle.ANDROID);
+		skillTitlesAndroidJAVA.add(SkillTitle.JAVA);
+		
+		List<SkillTitle> skillTitlesGraphic = new ArrayList<>();
+		skillTitlesGraphic.add(SkillTitle.GRAPHIC_DESIGN);
+		categoryRepository.save(category);
+		
+		Category category2 = new Category();
+		category2.setCategoryTitle(CategoryTitle.WEBSITE_IT_AND_SOFTWARE);
+		category2.setSkills(skillsGraphics);
+		
+		categoryRepository.save(category2);
+		
 		Project project = new Project();
 		project.setBudget(100.00);
-		project.setDescription("app is software as a service system");
-		project.setName("App");
+		project.setDescription("Android App | SAAS | Lollipop");
+		project.setName("Android Devlopment");
 		project.setCategory(category);
 		project.setFreelancers(freelancers);
 
@@ -142,6 +191,31 @@ public class InitServiceImpl {
 
 		userRepo.save(freelancers);
 
+		project2.setName("Graphic Design");
+		project2.setDescription("Graphic Design | UI | UX | Lollipop");
+		project2.setCategory(category2);
+		project2.setFreelancers(freelancers);
+		
+		projectRepo.save(project);
+
+		projectRepo.save(project2);
+		
+		List<Project> projects = new ArrayList<>();
+		projects.add(project);
+		projects.add(project2);
+//		System.out.println((projectRepo.findBySelections(skillTitlesAndroidJAVA, 
+//				CategoryTitle.MOBILE_PHONES_AND_COMPUTING, 50.00, 900.00).get(0).getName())+" : Titles");
+		
+		List<Project> results = projectRepo.findByDescAndTitle("Lollipop");
+		for(Project resultProject : results){
+
+			System.out.println("Project Title : "+resultProject.getName());
+		}
+		
+		
+		userService.saveFreelancerInProject(project, sabeen);
+		userService.saveFreelancerInProject(project2, sabeen);
+		
 	}
 
 }

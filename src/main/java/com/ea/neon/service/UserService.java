@@ -3,6 +3,8 @@ package com.ea.neon.service;
 import java.util.List;
 
 import com.ea.neon.domain.Employer;
+import com.ea.neon.domain.Freelancer;
+import com.ea.neon.domain.Project;
 import com.ea.neon.domain.User;
 
 public interface UserService {
@@ -18,4 +20,6 @@ public interface UserService {
 	public User findUserById(Integer id);
 
 	public Employer findEmployerById(Integer id);
+	
+	public void saveFreelancerInProject(Project project, Freelancer freelancer);
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ea.neon.domain.Employer;
+import com.ea.neon.domain.Freelancer;
+import com.ea.neon.domain.Project;
 import com.ea.neon.domain.User;
 import com.ea.neon.repository.AddressRepository;
 import com.ea.neon.repository.EmployerRepository;
@@ -18,6 +20,8 @@ import com.ea.neon.service.UserService;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+	
+	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -46,6 +50,13 @@ public class UserServiceImpl implements UserService {
 			System.out.println(e);
 			return null;
 		}
+	}
+	@Override
+	public void saveFreelancerInProject(Project project, Freelancer freelancer) {
+		freelancer.getProjects().add(project);
+		userRepository.save(freelancer);
+		
+		
 	}
 
 	@Override

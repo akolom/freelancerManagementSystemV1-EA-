@@ -17,9 +17,38 @@ public class Skills implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
+	public enum SkillTitle{
+		JAVA("JAVA"), HTML_HTML5("HTML/HTML5"), PHP("PHP"), JAVASCRIPT("JAVAScript"), 
+		MYSQL("MySQL"), C_PROGRAMMING("C Programming"), JQUERY("JQuery"),C_PLUS_PLUS("C++"), 
+		C_SHARP("C#"), PYTHON("Python"), ANDROID("Android"), GRAPHIC_DESIGN("Graphic Design"), SPRING_MVC("Spring MVC"); 
+		private final String text;
+		private SkillTitle(final String text){
+			this.text = text;
+		}
+		
+		
+		public String getText() {
+			return text;
+		}
 
-	public enum SkillTitle {
-		JAVA, HTML_HTML5, PHP, JAVASCRIPT, MYSQL, C_PROGRAMMING, JQUERY, C_PLUS_PLUS, C_SHARP, PYTHON, ANDROID, GRAPHIC_DESIGN, SPRING_MVC;
+
+		@Override
+		public String toString() {
+			return text;
+		}
+		
+		public static SkillTitle fromString(String text) {
+		    if (text != null) {
+		      for (SkillTitle b : SkillTitle.values()) {
+		        if (text.equalsIgnoreCase(b.text)) {
+		          return b;
+		        }
+		      }
+		    }
+		    return null;
+		  }
+
 	};
 
 	private SkillTitle skillTitle;
