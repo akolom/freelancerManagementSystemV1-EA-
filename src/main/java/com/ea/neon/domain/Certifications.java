@@ -1,5 +1,6 @@
 package com.ea.neon.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -7,16 +8,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Certifications {
+public class Certifications implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -189636640485033021L;
 
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
 	private String award;
-	
+
 	private String organization;
-	
+
 	private Date date;
 
 	public Integer getId() {
@@ -50,5 +56,5 @@ public class Certifications {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+
 }

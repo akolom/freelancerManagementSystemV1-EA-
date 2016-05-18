@@ -18,89 +18,77 @@ import com.ea.neon.service.CredentialService;
 
 import edu.mum.security.AuthenticateUser;
 
-
-
 @Controller
 public class LoginController {
-	
-@Autowired
-private CredentialService credentialsService;
 
+	@Autowired
+	private CredentialService credentialsService;
 
-@RequestMapping(value="/loginPage", method = RequestMethod.GET)
-public String login(){
-	
-	return "login";
-}
+	@RequestMapping(value = "/loginpage", method = RequestMethod.GET)
+	public String login() {
 
+		return "login";
+	}
 
-@RequestMapping(value="/postLogin", method = RequestMethod.POST)
-public String PostLogin(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/postLogin", method = RequestMethod.POST)
+	public String PostLogin(HttpServletRequest request, HttpServletResponse response) {
 
+		System.out.println("PostLogin Invoke:  ........  ");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("context/applicationContext.xml");
 
-	System.out.println("PostLogin Invoke:  ........  ");
-	 ApplicationContext ctx = new ClassPathXmlApplicationContext("context/applicationContext.xml");
+		AuthenticationManager authenticationManager = (AuthenticationManager) ctx.getBean("authenticationManager");
+		String name = request.getParameter("userName");
+		String password = request.getParameter("password");
+		/*
+		 * System.out.println("Name: "+name); System.out.println("Password: "
+		 * +password); if((name=="akolom")){
+		 * 
+		 * if((password=="akolom")){
+		 * 
+		 * 
+		 * } System.out.println("View Page Invoke:  ........  "); return
+		 * "viewpage"; }
+		 * 
+		 * else{ request.setAttribute("message",
+		 * "Please Sign in with correct user name and Password");
+		 * System.out.println("Error Page Invoke:  ........  "); return
+		 * "errorpage"; }
+		 */
 
-	    AuthenticationManager authenticationManager = (AuthenticationManager) ctx.getBean("authenticationManager");
-	String name = request.getParameter("userName");
-	String password = request.getParameter("password");
-	/*System.out.println("Name: "+name);
-	System.out.println("Password: "+password);
-	if((name=="akolom")){
-		
-		if((password=="akolom")){
-		
-	
+		try {
+
+			Authentication requestUser = new UsernamePasswordAuthenticationToken(name, password);
+
+			System.out.println("requestUser: " + requestUser);
+			Authentication result = authenticationManager.authenticate(requestUser);
+			System.out.println("Result: " + result);
+			SecurityContextHolder.getContext().setAuthentication(result);
+			// AuthenticateUser authenticateUser = new AuthenticateUser();
+
+			// authenticateUser.authenticate(authenticationManager, name,
+			// password);
+			return "viewpage";
+
 		}
-		System.out.println("View Page Invoke:  ........  ");
-		return "viewpage";
+
+		catch (Exception e) {
+
+			e.printStackTrace();
+			request.setAttribute("message", "Please Try Again To Authenticate: ");
+			return "errorpage";
+		}
+
 	}
-	
-	else{
-		request.setAttribute("message", "Please Sign in with correct user name and Password");
-		System.out.println("Error Page Invoke:  ........  ");
-	return "errorpage";
-	}*/
-	
-	
-	try{
-		
-		Authentication requestUser = new UsernamePasswordAuthenticationToken(name, password);
-		
-		System.out.println("requestUser: "+requestUser);
-		Authentication result = authenticationManager.authenticate(requestUser);
-		System.out.println("Result: "+result);
-		SecurityContextHolder.getContext().setAuthentication(result);
-		//AuthenticateUser authenticateUser = new AuthenticateUser();
-		
-		//authenticateUser.authenticate(authenticationManager, name, password);
-		return "viewpage";
-		
+
+	@RequestMapping("/errorpage")
+	public String errorPage() {
+		return "errorpage";
 	}
-	
-	catch (Exception e) {
-		
-  		e.printStackTrace();
-  		request.setAttribute("message", "Please Try Again To Authenticate: ");
-  		return "errorpage";
-  	}
-	
-	
-		
-}
 
-@RequestMapping("/errorpage")
-public String errorPage() {
-	return "errorpage";
-}
+	@RequestMapping(value = "/editprofile", method = RequestMethod.GET)
+	public String editprofile() {
 
-@RequestMapping(value="/editprofile", method = RequestMethod.GET)
-public String editprofile(){
-	
-	return "editprofile";
-}
-
-
-
+		return "editprofile";
+	}
 
 }

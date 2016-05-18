@@ -2,8 +2,10 @@ package com.ea.neon.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -13,27 +15,32 @@ import javax.persistence.OneToMany;
 @DiscriminatorValue(value = "freelancer")
 public class Freelancer extends User {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2984456787460142966L;
+
 	private Double charge;
 
 	private Double jobCompleted;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "freelancer_experiances")
 	private List<Experience> experiances;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "freelancer_education")
 	private List<Education> educations;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinTable
 	private List<Project> projects;
-	
-	@OneToMany
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn
 	private List<Certifications> certifications;
-	
-	@OneToMany
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn
 	private List<Skills> skills;
 

@@ -1,23 +1,27 @@
 package com.ea.neon.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Status {
+public class Status implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6613657980527314974L;
 
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	
-	public enum ProjectStatus{
-		CALL_FOR_INTERVIEW,
-		DECLINED,
-		PENDING;
+
+	public enum ProjectStatus {
+		CALL_FOR_INTERVIEW, DECLINED, PENDING;
 	};
-	
+
 	private ProjectStatus projectStatus;
 
 	public Integer getId() {
@@ -35,6 +39,5 @@ public class Status {
 	public void setProjectStatus(ProjectStatus projectStatus) {
 		this.projectStatus = projectStatus;
 	}
-	
-	
+
 }

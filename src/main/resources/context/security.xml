@@ -20,8 +20,11 @@
 		<security:authentication-provider>
 			<security:jdbc-user-service
 				data-source-ref="dataSource"
-				users-by-username-query="select c.userName, c.password, 1 from credentials c where c.userName = ?"
-				authorities-by-username-query="select c.userName, a.role from credentials c, authority a where c.credentials = a.id and c.userName = ?" />
+				users-by-username-query="select userName, password, id from credentials where userName = ?"
+				authorities-by-username-query="select c.userName, a.role from
+					credentials c, authority a where
+					c.credentials = a.id and c.userName
+					= ?" />
 		</security:authentication-provider>
 
 	</security:authentication-manager>

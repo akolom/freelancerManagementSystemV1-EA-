@@ -1,28 +1,35 @@
 package com.ea.neon.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Category {
+public class Category implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7996710154317542589L;
 
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	public enum CategoryTitle{
+
+	public enum CategoryTitle {
 		WEBSITE_IT_AND_SOFTWARE, MOBILE_PHONES_AND_COMPUTING;
 	};
-	
-	
+
 	private CategoryTitle categoryTitle;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinColumn
 	private List<Skills> skills;
 
@@ -50,6 +57,4 @@ public class Category {
 		this.skills = skills;
 	}
 
-	
-	
 }

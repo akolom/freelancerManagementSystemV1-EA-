@@ -1,33 +1,33 @@
 package com.ea.neon.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Authority {
+public class Authority implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4368824560841714481L;
 
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	public Credentials getCredentials() {
-		return credentials;
-	}
+	private String name;
 
-	public void setCredentials(Credentials credentials) {
-		this.credentials = credentials;
-	}
-
-	private String userName;
-	
 	private String role;
-	
-	@OneToOne(mappedBy="authority")
+
+	@JsonIgnore
+	@OneToOne(mappedBy = "authority", fetch = FetchType.LAZY)
 	private Credentials credentials;
-	
-	
 
 	public Integer getId() {
 		return id;
@@ -37,14 +37,6 @@ public class Authority {
 		this.id = id;
 	}
 
-	public String getName() {
-		return userName;
-	}
-
-	public void setName(String name) {
-		this.userName = name;
-	}
-
 	public String getRole() {
 		return role;
 	}
@@ -52,6 +44,21 @@ public class Authority {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
-	
+
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

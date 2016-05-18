@@ -2,6 +2,7 @@ package com.ea.neon.service;
 
 import java.util.List;
 
+import com.ea.neon.domain.Employer;
 import com.ea.neon.domain.User;
 
 public interface UserService {
@@ -15,4 +16,8 @@ public interface UserService {
 	public User update(User user);
 
 	public User findOneByUsername(String userName);
+
+	public User findUserById(Integer id);
+
+	public Employer findEmployerById(Integer id);
 }
