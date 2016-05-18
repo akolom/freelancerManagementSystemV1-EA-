@@ -6,21 +6,22 @@
 
 	<security:http use-expressions="true">
 		<security:intercept-url pattern="/asdf/**"
-			access="ROLE_ADMIN" />
-		<security:form-login login-page="/login" />
+			access="hasRole('ROLE_ADMIN')" />
+		<security:form-login />
 		<security:logout logout-url="/logout" />
 		<security:csrf disabled="true" />
 	</security:http>
 
 	<security:authentication-manager alias="authenticationManager">
 		<security:authentication-provider>
-			<security:password-encoder hash="bcrypt" />
-			<security:user-service>
-				<security:user name="admin" password="admin"
-					authorities="ROLE_ADMIN" />
-				<security:user name="guest" password="guest"
-					authorities="ROLE_USER" />
-			</security:user-service>
+			<!-- <security:password-encoder hash="bcrypt" /> -->
+			<!-- <security:user-service> <security:user name="admin" password="admin" 
+				authorities="ROLE_ADMIN" /> <security:user name="guest" password="guest" 
+				authorities="ROLE_USER" /> </security:user-service> -->
+			<security:jdbc-user-service
+				data-source-ref="dataSource"
+				users-by-username-query="select userName, password, id from credentials where userName = ?"
+				authorities-by-username-query="select c.userName, a.role from credentials c, authority a where c.credentials = a.id and c.userName = ?" />
 		</security:authentication-provider>
 	</security:authentication-manager>
 

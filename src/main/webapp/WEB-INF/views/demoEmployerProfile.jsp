@@ -113,10 +113,11 @@
 									Category</label>
 								<div class="col-sm-10">
 									<form:select cssClass="selectpicker" path="category"
-										items="${categories }" itemLabel="id" itemValue="id" />
+										items="${categories }" itemLabel="categoryTitle"
+										itemValue="id" />
 								</div>
 							</div>
-							<div class="form-group">
+							<%-- <div class="form-group">
 								<label for="skills" class="col-sm-2 control-label">Project
 									Skills</label>
 								<div class="col-sm-10">
@@ -124,7 +125,7 @@
 										items="${skills }" itemLabel="skillTitle" itemValue="id"
 										multiple="true" size="3"></form:select>
 								</div>
-							</div>
+							</div> --%>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 									<button type="submit" class="btn btn-default">Add
@@ -141,7 +142,10 @@
 								<div class="row">
 									<c:forEach items="${project.freelancers }" var="freelancer">
 										<div class="col-lg-2"></div>
-										<div class="col-lg-6">${freelancer.firstName }</div>
+										<div class="col-lg-6">
+											<a
+												href='<spring:url value="/freelancer/profile.html?id=${freelancer.id}"/>'>${freelancer.firstName }</a>
+										</div>
 										<div class="col-lg-4"></div>
 									</c:forEach>
 								</div>
@@ -158,6 +162,27 @@
 			$('#myTabs a').click(function(e) {
 				e.preventDefault()
 				$(this).tab('show')
+			});
+			$('#category').on('change', function() {
+				var category_id = $(this).val();
+				console.log(category_id);
+				$.ajax({
+					type : 'GET',
+					url : '<spring:url value="/employer/getSkills.html"/>',
+					contentType : "application/json; charset=utf-8",
+					data : {
+						cat_id : category_id
+					},
+					/* dataType : 'json', */
+					success : function(data) {
+						$.each(data, function(index, element) {
+							console.log(element.id);
+							/* $('body').append($('<div>', {
+								text : element.name
+							})); */
+						});
+					}
+				});
 			});
 		});
 	</script>

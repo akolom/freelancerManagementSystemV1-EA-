@@ -40,7 +40,7 @@ public class Freelancer extends User {
 	@JoinColumn
 	private List<Certifications> certifications;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn
 	private List<Skills> skills;
 

@@ -9,8 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -31,7 +33,7 @@ public class Project implements Serializable {
 
 	private String description;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinColumn
 	private Status status;
 
@@ -42,9 +44,13 @@ public class Project implements Serializable {
 	@JoinColumn
 	private Employer employer;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinColumn
 	private Category category;
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+	@JoinTable
+	private List<Skills> skills;
 
 	public Status getStatus() {
 		return status;
@@ -108,6 +114,14 @@ public class Project implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<Skills> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skills> skills) {
+		this.skills = skills;
 	}
 
 }

@@ -24,11 +24,10 @@ import com.ea.neon.domain.Skills.SkillTitle;
 import com.ea.neon.domain.User;
 import com.ea.neon.repository.AuthorityRepository;
 import com.ea.neon.repository.CategoryRepository;
-import com.ea.neon.repository.CredentialsRepository;
-import com.ea.neon.repository.ProfileRepository;
 import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.repository.SkillsRepository;
 import com.ea.neon.repository.UserRepository;
+import com.ea.neon.service.CredentialService;
 
 @Service
 @Transactional
@@ -47,22 +46,29 @@ public class InitServiceImpl {
 	SkillsRepository skillsRepository;
 
 	@Autowired
-	private ProfileRepository profileRepository;
-
-	@Autowired
-	private CredentialsRepository credentialsRepository;
-
-	@Autowired
 	private AuthorityRepository authorityRepository;
+
+	@Autowired
+	private CredentialService credentialService;
 
 	@PostConstruct
 	public void init() {
 
+		Authority adminAuthority = new Authority();
+		adminAuthority.setRole("ROLE_ADMIN");
+		adminAuthority.setName("ADMIN");
+		authorityRepository.save(adminAuthority);
+
+		Credentials admin = new Credentials();
+		admin.setUserName("admin");
+		admin.setPassword("admin");
+		admin.setEnabled(true);
+		admin.setAuthority(adminAuthority);
+		credentialService.saveCredential(admin);
+
 		Profile profile = new Profile();
 		profile.setProfessionalHeadLine("I am an employer. I will post my projects for freelancers");
 		profile.setProfileSummary("This is a test profile of an employer.");
-
-		profileRepository.save(profile);
 
 		Authority authority = new Authority();
 		authority.setName("Employer");
@@ -98,7 +104,7 @@ public class InitServiceImpl {
 		skillsRepository.save(skillsAndroid);
 
 		Skills skillsJAVA = new Skills();
-		skillsAndroid.setSkillTitle(SkillTitle.JAVA);
+		skillsJAVA.setSkillTitle(SkillTitle.JAVA);
 		skillsRepository.save(skillsJAVA);
 
 		List<Skills> skills = new ArrayList<>();
@@ -108,6 +114,26 @@ public class InitServiceImpl {
 		Category category = new Category();
 		category.setCategoryTitle(CategoryTitle.MOBILE_PHONES_AND_COMPUTING);
 		category.setSkills(skills);
+
+		categoryRepository.save(category);
+
+		Skills skillsHTML = new Skills();
+		skillsHTML.setSkillTitle(SkillTitle.HTML_HTML5);
+		skillsRepository.save(skillsHTML);
+
+		Skills skillsPHP = new Skills();
+		skillsPHP.setSkillTitle(SkillTitle.PHP);
+		skillsRepository.save(skillsPHP);
+
+		List<Skills> skills1 = new ArrayList<>();
+		skills1.add(skillsHTML);
+		skills1.add(skillsPHP);
+
+		Category category1 = new Category();
+		category1.setCategoryTitle(CategoryTitle.WEBSITE_IT_AND_SOFTWARE);
+		category1.setSkills(skills1);
+
+		categoryRepository.save(category1);
 
 		Freelancer freelancer = new Freelancer();
 		freelancer.setFirstName("freelancer");

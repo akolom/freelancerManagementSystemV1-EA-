@@ -18,7 +18,7 @@ public class LoginController {
 private CredentialService credentialsService;
 
 
-@RequestMapping(value="/login", method = RequestMethod.GET)
+@RequestMapping(value="/loginpage", method = RequestMethod.GET)
 public String login(){
 	
 	return "login";

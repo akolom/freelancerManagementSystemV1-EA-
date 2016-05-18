@@ -24,6 +24,15 @@ public class Credentials implements Serializable {
 
 	private String userName;
 
+	private String password;
+
+	private boolean enabled;
+
+	private String verifyPassword;
+
+	@OneToOne(mappedBy = "credentials", fetch = FetchType.EAGER)
+	private User user;
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "credentials")
 	private Authority authority;
@@ -43,13 +52,6 @@ public class Credentials implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	private String password;
-
-	private String verifyPassword;
-
-	@OneToOne(mappedBy = "credentials")
-	private User user;
 
 	public Integer getId() {
 		return id;
@@ -81,6 +83,14 @@ public class Credentials implements Serializable {
 
 	public void setVerifyPassword(String verifyPassword) {
 		this.verifyPassword = verifyPassword;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }

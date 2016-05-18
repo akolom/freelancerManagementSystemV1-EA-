@@ -43,6 +43,10 @@ public class User implements Serializable {
 	@JoinColumn(name = "user_credentials")
 	private Credentials credentials;
 
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_profile")
+	private Profile profile;
+
 	public List<Address> getAddresses() {
 		return addresses;
 	}
@@ -50,10 +54,6 @@ public class User implements Serializable {
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}
-
-	@OneToOne
-	@JoinColumn(name = "user_profile")
-	private Profile profile;
 
 	public Profile getProfile() {
 		return profile;

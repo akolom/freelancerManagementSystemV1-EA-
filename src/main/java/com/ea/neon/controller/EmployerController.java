@@ -11,9 +11,12 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.ea.neon.domain.Category;
 import com.ea.neon.domain.Employer;
@@ -52,7 +55,6 @@ public class EmployerController {
 		employer.setProject(projects);
 		model.addAttribute("currentUser", employer);
 		model.addAttribute("categories", categoryService.findAll());
-		model.addAttribute("skills", skillService.findAll());
 		return "demoEmployerProfile";
 	}
 
@@ -72,6 +74,13 @@ public class EmployerController {
 		 */
 		projectService.saveProject(project);
 		return "redirect:/employer/profile.html?id=3";
+	}
+
+	@RequestMapping(value = "/getSkills", headers = { "Accept=text/xml, application/json" })
+	public @ResponseBody List<Skills> getSkills(@RequestParam("cat_id") Integer id) {
+		Category category = categoryService.getCategoryById(id);
+		System.out.println(category.getSkills());
+		return category.getSkills();
 	}
 
 	@InitBinder
