@@ -55,7 +55,6 @@
 		entity-manager-factory-ref="entityManagerFactory"
 		transaction-manager-ref="transactionManager" />
 
-
-	<import resource="security.xml" />
+	<import resource="classpath:context/security.xml" />
 
 </beans>

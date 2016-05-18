@@ -2,6 +2,7 @@ package com.ea.neon.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +32,7 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<Address> addresses;
 
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "user_credentials")
 	private Credentials credentials;
 

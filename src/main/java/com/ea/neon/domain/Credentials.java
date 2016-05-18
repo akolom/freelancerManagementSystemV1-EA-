@@ -1,5 +1,6 @@
 package com.ea.neon.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,7 +18,7 @@ public class Credentials {
 	private String userName;
 	
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="credentials")
 	private Authority authority;
 	

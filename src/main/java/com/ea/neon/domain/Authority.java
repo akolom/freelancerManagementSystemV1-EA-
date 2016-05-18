@@ -20,7 +20,7 @@ public class Authority {
 		this.credentials = credentials;
 	}
 
-	private String name;
+	private String userName;
 	
 	private String role;
 	
@@ -38,11 +38,11 @@ public class Authority {
 	}
 
 	public String getName() {
-		return name;
+		return userName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.userName = name;
 	}
 
 	public String getRole() {
