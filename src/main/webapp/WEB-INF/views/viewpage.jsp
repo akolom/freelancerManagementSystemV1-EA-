@@ -7,18 +7,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Index Page</title>
+<title>View Profile</title>
 <%@ include file="/WEB-INF/import/links.jsp"%>
 </head>
 <body>
 
-	<div class="container">
-		<h1>Welcome Neons</h1>
-		
-		<a href="<spring:url value='/login.html' />" class="btn btn-default pull-right"> Login</a>
-		<a href="<spring:url value='/signup.html' />" class="btn btn-default pull-right"> SignUP</a>
-		<%-- <a href="<spring:url value='/logout.html' />" class="btn btn-default pull-right"> LogOut</a> --%>
-	</div>
+
+	<h1>Welcome Neons</h1>
+	
+	
+	<p>Please click this link to edit profile<a href="<spring:url value='/editProfileGet.html' />"
+		class="btn btn-default pull-right"> edit Profil</a>
+	<%-- <a href="<spring:url value='/logout.html' />" class="btn btn-default pull-right"> LogOut</a> --%>
+</p>
 
 </body>
 </html>

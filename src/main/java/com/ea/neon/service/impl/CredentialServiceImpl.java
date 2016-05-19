@@ -1,6 +1,8 @@
 package com.ea.neon.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,23 +17,17 @@ public class CredentialServiceImpl implements CredentialService {
 	@Autowired
 	private CredentialsRepository credentialRepository;
 
-	/*
-	 *
-	 * 
-	 * 
-	 * 
-	 * 
-	 * @Override public void save(Credentials credentials) {
-	 * credentialRepository.save(credentials);
-	 * 
-	 * }
-	 * 
-	 */
+	public Credentials findOneByUserName(String userName) {
+		return credentialRepository.findOneByUserName(userName);
+	}
 
-	@Override
-	public Credentials findByUserName(String userName) {
-		// TODO Auto-generated method stub
-		return null;
+	public void save(Credentials credentials) {
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPassword = passwordEncoder.encode(credentials.getPassword());
+		credentials.setPassword(encodedPassword);
+
+		credentialRepository.save(credentials);
+
 	}
 
 	@Override

@@ -19,7 +19,6 @@ public class Authority implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
-
 	private String name;
 
 	private String role;
@@ -33,14 +32,6 @@ public class Authority implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getRole() {
@@ -57,6 +48,14 @@ public class Authority implements Serializable {
 
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

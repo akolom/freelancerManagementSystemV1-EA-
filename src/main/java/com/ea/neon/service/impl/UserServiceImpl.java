@@ -51,12 +51,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User update(User user) {
+		
+		//userRepository.update(user);
+	
 		try {
 			return userRepository.save(user);
 		} catch (StaleObjectStateException e) {
 			System.out.println(e);
 			return null;
 		}
+	}
+	@Override
+	public User findOneByUsername(String userName) {
+		return userRepository.findOneByCredentialsUserName(userName);
 	}
 
 	@Override

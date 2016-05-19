@@ -17,6 +17,8 @@ public interface UserService {
 
 	public User update(User user);
 
+	public User findOneByUsername(String userName);
+
 	public User findUserById(Integer id);
 
 	public Employer findEmployerById(Integer id);
