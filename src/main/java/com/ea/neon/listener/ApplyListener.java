@@ -18,7 +18,8 @@ UserService userService;
 		ObjectMessage objectMessage = (ObjectMessage) message; 
 		ProjectApplyDTO projectApplyDTO = null;
 		try {
-			projectApplyDTO = (ProjectApplyDTO) objectMessage.getObject();		
+			projectApplyDTO = (ProjectApplyDTO) objectMessage.getObject();
+			System.out.println(projectApplyDTO.getProject().getName());
 			userService.saveFreelancerInProject(projectApplyDTO.getProject(), projectApplyDTO.getFreelancer());
 		} catch (JMSException e) {
 			e.printStackTrace();

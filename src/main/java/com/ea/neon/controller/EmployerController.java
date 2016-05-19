@@ -68,7 +68,7 @@ public class EmployerController {
 		String username = principal.getName();
 		project.setEmployer((Employer) userService.findOneByUsername(username));
 		if(result.hasErrors()){
-			return "redirect:/employer/profile.html";
+			return "employerProfile";
 		}
 		projectService.saveProject(project);
 		return "redirect:/employer/profile.html";

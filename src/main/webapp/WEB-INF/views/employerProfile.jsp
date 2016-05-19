@@ -148,6 +148,7 @@
 								<div class="col-sm-10">
 									<form:input path="name" cssClass="form-control"
 										placeholder="Project1" />
+										<form:errors path="name" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -156,6 +157,7 @@
 								<div class="col-sm-10">
 									<form:textarea path="description" cssClass="form-control"
 										placeholder="This project deals with ...." />
+										<form:errors path="description" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -164,6 +166,7 @@
 								<div class="col-sm-10">
 									<form:input path="budget" cssClass="form-control"
 										placeholder="100.00 $" />
+										<form:errors path="budget" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -173,6 +176,7 @@
 									<form:select cssClass="selectpicker" path="category"
 										items="${categories }" itemLabel="categoryTitle.text"
 										itemValue="id" />
+										<form:errors path="category"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -180,6 +184,7 @@
 									Skills</label>
 								<div class="col-sm-10">
 									<form:select path="skills" multiple="true"></form:select>
+									<form:errors path="skills" />
 								</div>
 							</div>
 							<div class="form-group">
