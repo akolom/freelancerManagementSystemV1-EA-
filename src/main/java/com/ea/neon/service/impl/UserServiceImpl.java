@@ -1,5 +1,6 @@
 package com.ea.neon.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.StaleObjectStateException;
@@ -8,9 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ea.neon.domain.Employer;
+import com.ea.neon.domain.Freelancer;
+import com.ea.neon.domain.Project;
 import com.ea.neon.domain.User;
 import com.ea.neon.repository.AddressRepository;
 import com.ea.neon.repository.EmployerRepository;
+import com.ea.neon.repository.FreelancerRepository;
+import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.repository.UserRepository;
 import com.ea.neon.service.UserService;
 
@@ -26,6 +31,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private AddressRepository addressRepository;
+
+	@Autowired
+	private FreelancerRepository freelancerRepository;
+
+	@Autowired
+	private ProjectRepository projectRepository;
 
 	public void save(User user) {
 		userRepository.save(user);
@@ -64,6 +75,18 @@ public class UserServiceImpl implements UserService {
 		employer.getCredentials();
 		employer.getProfile();
 		return employer;
+	}
+
+	@Override
+	public void removeProjectFromFreelancer(Freelancer freelancer, Project project) {
+		List<Project> projects = projectRepository.findAllByFreelancers(Arrays.asList(freelancer));
+		for (int i = 0; i < projects.size(); i++) {
+			if (projects.get(i).getId() == project.getId()) {
+				projects.remove(i);
+			}
+		}
+		freelancer.setProjects(projects);
+		freelancerRepository.save(freelancer);
 	}
 
 }

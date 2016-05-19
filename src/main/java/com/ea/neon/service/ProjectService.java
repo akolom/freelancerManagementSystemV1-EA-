@@ -10,5 +10,9 @@ public interface ProjectService {
 	public void saveProject(Project project);
 
 	public List<Project> findAllByEmployer(Employer employer);
+
+	public Project getProjectById(Integer projectId);
+
+	public void updateProject(Project project);
 	
 }

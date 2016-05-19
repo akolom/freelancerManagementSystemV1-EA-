@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Authority implements Serializable {
 
@@ -26,7 +24,6 @@ public class Authority implements Serializable {
 
 	private String role;
 
-	@JsonIgnore
 	@OneToOne(mappedBy = "authority", fetch = FetchType.LAZY)
 	private Credentials credentials;
 

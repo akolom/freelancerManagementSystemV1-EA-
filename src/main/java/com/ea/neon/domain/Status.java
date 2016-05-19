@@ -19,7 +19,7 @@ public class Status implements Serializable {
 	private Integer id;
 
 	public enum ProjectStatus {
-		CALL_FOR_INTERVIEW, DECLINED, PENDING;
+		CALL_FOR_INTERVIEW, DECLINED, PENDING, ACCEPTED;
 	};
 
 	private ProjectStatus projectStatus;

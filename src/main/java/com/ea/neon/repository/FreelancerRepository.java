@@ -9,5 +9,5 @@ import com.ea.neon.domain.Freelancer;
 public interface FreelancerRepository extends JpaRepository<Freelancer, Integer> {
 
 	List<Freelancer> findAllByProjectsId(Integer id);
-
+	
 }

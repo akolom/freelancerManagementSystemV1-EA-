@@ -9,7 +9,6 @@ import com.ea.neon.domain.Category.CategoryTitle;
 import com.ea.neon.domain.Employer;
 import com.ea.neon.domain.Freelancer;
 import com.ea.neon.domain.Project;
-import com.ea.neon.domain.Skills.SkillTitle;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
@@ -17,5 +16,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	List<Project> findBySelections(CategoryTitle categoryTitle, Double minBudget, Double maxBudget);
 
 	List<Project> findAllByEmployer(Employer employer);
+
+	List<Project> findAllByFreelancers(List<Freelancer> freelancers);
 
 }

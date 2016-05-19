@@ -21,11 +21,14 @@ import com.ea.neon.domain.Profile;
 import com.ea.neon.domain.Project;
 import com.ea.neon.domain.Skills;
 import com.ea.neon.domain.Skills.SkillTitle;
+import com.ea.neon.domain.Status.ProjectStatus;
+import com.ea.neon.domain.Status;
 import com.ea.neon.domain.User;
 import com.ea.neon.repository.AuthorityRepository;
 import com.ea.neon.repository.CategoryRepository;
 import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.repository.SkillsRepository;
+import com.ea.neon.repository.StatusRepository;
 import com.ea.neon.repository.UserRepository;
 import com.ea.neon.service.CredentialService;
 
@@ -50,6 +53,9 @@ public class InitServiceImpl {
 
 	@Autowired
 	private CredentialService credentialService;
+
+	@Autowired
+	private StatusRepository statusRepository;
 
 	@PostConstruct
 	public void init() {
@@ -135,10 +141,30 @@ public class InitServiceImpl {
 
 		categoryRepository.save(category1);
 
-		Freelancer freelancer = new Freelancer();
-		freelancer.setFirstName("freelancer");
+		Freelancer freelancer1 = new Freelancer();
+		freelancer1.setFirstName("freelancer1");
+		freelancer1.setEmail("ksav.sai52@gmail.com");
+		
+		Freelancer freelancer2 = new Freelancer();
+		freelancer2.setFirstName("freelancer2");
+		freelancer2.setEmail("sabeenpradhan@gmail.com");
 
-		List<Freelancer> freelancers = Arrays.asList(freelancer);
+		List<Freelancer> freelancers = Arrays.asList(freelancer1, freelancer2);
+
+		Status statusPending = new Status();
+		statusPending.setProjectStatus(ProjectStatus.PENDING);
+
+		statusRepository.save(statusPending);
+		
+		Status statusCallForInterview = new Status();
+		statusCallForInterview.setProjectStatus(ProjectStatus.CALL_FOR_INTERVIEW);
+		
+		statusRepository.save(statusCallForInterview);
+		
+		Status statusAccepted = new Status();
+		statusAccepted.setProjectStatus(ProjectStatus.ACCEPTED);
+		
+		statusRepository.save(statusAccepted);
 
 		Project project = new Project();
 		project.setBudget(100.00);
@@ -146,6 +172,7 @@ public class InitServiceImpl {
 		project.setName("App");
 		project.setCategory(category);
 		project.setFreelancers(freelancers);
+		project.setStatus(statusPending);
 
 		Project project2 = new Project();
 		project2.setBudget(10000.00);
@@ -164,7 +191,8 @@ public class InitServiceImpl {
 
 		projectRepo.save(project2);
 
-		freelancer.setProjects(Arrays.asList(project));
+		freelancer1.setProjects(Arrays.asList(project));
+		freelancer2.setProjects(Arrays.asList(project));
 
 		userRepo.save(freelancers);
 

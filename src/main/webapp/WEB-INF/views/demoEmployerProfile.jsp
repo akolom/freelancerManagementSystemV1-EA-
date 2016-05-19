@@ -62,10 +62,18 @@
 		</div>
 		<br>
 		<div class="row">
-			<%-- 			<a href='<spring:url value="/employer/addProject.html"/>'
-				class="btn btn-primary">Add Project</a> <a
-				href='<spring:url value="/employer/getProjectList.html"/>'
-				class="btn btn-primary">View Project List</a> --%>
+			<c:if test="${error }">
+				<div class="alert alert-warning" role="alert">Email sending
+					failed!</div>
+			</c:if>
+			${error }
+			<c:if test="${(not empty error) && (not error)}">
+				<div class="alert alert-success" role="alert">Email sent
+					successfully to ${f.firstName }!</div>
+			</c:if>
+		</div>
+		<br>
+		<div class="row">
 			<div>
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
@@ -117,15 +125,16 @@
 										itemValue="id" />
 								</div>
 							</div>
-							<%-- <div class="form-group">
+							<div class="form-group">
 								<label for="skills" class="col-sm-2 control-label">Project
 									Skills</label>
 								<div class="col-sm-10">
-									<form:select cssClass="selectpicker" path="category.skills"
-										items="${skills }" itemLabel="skillTitle" itemValue="id"
-										multiple="true" size="3"></form:select>
+									<form:select path="skills" multiple="true"></form:select>
+									<%-- <form:select cssClass="selectpicker" path="category"
+										items="${categories }" itemLabel="categoryTitle"
+										itemValue="id" /> --%>
 								</div>
-							</div> --%>
+							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 									<button type="submit" class="btn btn-default">Add
@@ -135,23 +144,152 @@
 						</form:form>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="viewProjectList">
+						<p class="h3">Your Projects</p>
 						<c:forEach items="${currentUser.project}" var="project">
 							<div class="row panel-body">
-								<div class="col-md-6 text-primary">Project Name</div>
-								<div class="col-md-6">${project.name}</div>
-								<div class="row">
-									<c:forEach items="${project.freelancers }" var="freelancer">
-										<div class="col-lg-2"></div>
-										<div class="col-lg-6">
-											<a
-												href='<spring:url value="/freelancer/profile.html?id=${freelancer.id}"/>'>${freelancer.firstName }</a>
+								<blockquote>
+									<div class="row">
+										<div class="col-lg-8">
+											<div class="row">
+												<div class="text-primary">${project.name}</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3">Description</div>
+												<div class="col-md-9 text-center">${project.description}</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3">Category</div>
+												<div class="col-md-9 text-center">${project.category.categoryTitle}</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3">Skills</div>
+												<div class="col-md-9 text-center">
+												<c:forEach items="${project.skills }" var="skill">
+													${skill.skillTitle}
+													&nbsp;&nbsp;
+												</c:forEach>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3">Budget</div>
+												<div class="col-md-9 text-center">$ ${project.budget}</div>
+											</div>
 										</div>
-										<div class="col-lg-4"></div>
-									</c:forEach>
-								</div>
+										<div class="col-lg-4">
+											<button type="button"
+												class="btn btn-primary editProjectTrigger"
+												value="${project.id}">Edit Project</button>
+											<%-- <a href="${project.id}" id="editProjectTrigger"
+												class="btn btn-primary">Edit Project</a>
+											<!-- Button trigger modal -->
+											<button type="button" class="btn btn-primary btn-lg"
+												data-toggle="modal" data-target="#myModal">Launch
+												demo modal</button> --%>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<c:forEach items="${project.freelancers }" var="freelancer">
+											<div class="col-lg-2"></div>
+											<div class="col-lg-6">
+												<a
+													href='<spring:url value="/freelancer/profile.html?id=${freelancer.id}"/>'>${freelancer.firstName }</a>
+											</div>
+											<div class="col-lg-4">
+												<c:if
+													test="${(project.status.projectStatus != 'CALL_FOR_INTERVIEW') && (project.status.projectStatus != 'ACCEPTED')}">
+													<a
+														href='<spring:url value="/email/forInterview.html?f_id=${freelancer.id}&&p_id=${project.id}"/>'
+														class="btn btn-info">Email for interview</a>
+												</c:if>
+												<c:if
+													test="${(project.status.projectStatus == 'PENDING') || (project.status.projectStatus == 'CALL_FOR_INTERVIEW')}">
+													<a
+														href='<spring:url value="/project/hireFreelancer.html?f_id=${freelancer.id}&&p_id=${project.id}"/>'
+														class="btn btn-primary">Hire</a>
+												</c:if>
+											</div>
+										</c:forEach>
+									</div>
+								</blockquote>
 							</div>
 						</c:forEach>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="editProject" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Edit Project</h4>
+				</div>
+				<div class="modal-body">
+				<form:form commandName="newProject" method="post"
+							action="/FreelanceManagementSystem/employer/addProject.html"
+							cssClass="form-horizontal">
+							<input type="hidden" id="id" name="id" class="hidden-id">
+							<div class="form-group">
+								<label for="name" class="col-sm-2 control-label">Project
+									Name</label>
+								<div class="col-sm-10">
+									<form:input path="name" cssClass="form-control edit-name"
+										placeholder="Project1" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="description" class="col-sm-2 control-label">Project
+									Description</label>
+								<div class="col-sm-10">
+									<form:textarea path="description" cssClass="form-control edit-description"
+										placeholder="This project deals with ...." />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="budget" class="col-sm-2 control-label">Project
+									Budget</label>
+								<div class="col-sm-10">
+									<form:input path="budget" cssClass="form-control edit-budget"
+										placeholder="100.00 $" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="category" class="col-sm-2 control-label">Project
+									Category</label>
+								<div class="col-sm-10">
+									<form:select cssClass="selectpicker edit-category" path="category"
+										items="${categories }" itemLabel="categoryTitle"
+										itemValue="id" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="skills" class="col-sm-2 control-label">Project
+									Skills</label>
+								<div class="col-sm-10">
+									<form:select class="edit-skills" path="skills" multiple="true"></form:select>
+									<%-- <form:select cssClass="selectpicker" path="category"
+										items="${categories }" itemLabel="categoryTitle"
+										itemValue="id" /> --%>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-default">Update
+										Project</button>
+								</div>
+							</div>
+						</form:form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -163,26 +301,63 @@
 				e.preventDefault()
 				$(this).tab('show')
 			});
-			$('#category').on('change', function() {
-				var category_id = $(this).val();
-				console.log(category_id);
+			$("#category").on("change", function() {
+				$('#skills').children().remove();
 				$.ajax({
-					type : 'GET',
-					url : '<spring:url value="/employer/getSkills.html"/>',
-					contentType : "application/json; charset=utf-8",
-					data : {
-						cat_id : category_id
-					},
-					/* dataType : 'json', */
-					success : function(data) {
-						$.each(data, function(index, element) {
-							console.log(element.id);
-							/* $('body').append($('<div>', {
-								text : element.name
-							})); */
-						});
-					}
+					"url" : '<spring:url value="/rest/getSkills/"/>' + $(this).val(),
+					"type" : "GET",
+					"dataType" : "json",
+					"success" : successFunction,
+					"error" : failureFunction
 				});
+				function successFunction(json) {
+					$.each(json, function(i, value) {
+						console.log(value.skillTitle);
+				           $('#skills').append($('<option>').text(value.skillTitle).attr('value', value.id));
+				    });
+				}
+				function failureFunction(data) {
+					alert("error");
+				}
+			});
+			$(".editProjectTrigger").click(function() {
+				var status_id = $(this).val();
+				$(".hidden-id").val(status_id);
+				$.ajax({
+					"url" : '<spring:url value="/rest/getProject/"/>' + status_id,
+					"type" : "GET",
+					"dataType" : "json",
+					"success" : successEditFunction,
+					"error" : failureEditFunction
+				});
+				function successEditFunction(json) {
+					$(".edit-name").val(json.name);
+					$(".edit-description").val(json.description);
+					$(".edit-budget").val(json.budget);
+				}
+				function failureEditFunction(data) {
+					alert("error");
+				}
+				$("#editProject").modal("show");
+			});
+			$(".edit-category").on("change", function() {
+				$('.edit-skills').children().remove();
+				$.ajax({
+					"url" : '<spring:url value="/rest/getSkills/"/>' + $(this).val(),
+					"type" : "GET",
+					"dataType" : "json",
+					"success" : successEditCategoryFunction,
+					"error" : failureEditCategoryFunction
+				});
+				function successEditCategoryFunction(json) {
+					$.each(json, function(i, value) {
+						console.log(value.skillTitle);
+				           $('.edit-skills').append($('<option>').text(value.skillTitle).attr('value', value.id));
+				    });
+				}
+				function failureEditCategoryFunction(data) {
+					alert("error");
+				}
 			});
 		});
 	</script>

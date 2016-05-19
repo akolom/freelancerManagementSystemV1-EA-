@@ -2,7 +2,6 @@ package com.ea.neon.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,7 +32,7 @@ public class Credentials implements Serializable {
 	@OneToOne(mappedBy = "credentials", fetch = FetchType.EAGER)
 	private User user;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "credentials")
 	private Authority authority;
 
