@@ -4,10 +4,13 @@ import java.beans.PropertyEditorSupport;
 import java.security.Principal;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -55,17 +58,22 @@ public class EmployerController {
 		model.addAttribute("currentUser", employer);
 		model.addAttribute("categories", categoryService.findAll());
 		model.addAttribute("skills", skillService.findAll());
+
 		return "employerProfile";
 	}
 
 	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
-	public String addProject(@ModelAttribute("newProject") Project project, Principal principal) {
+	public String addProject(@Valid @ModelAttribute("newProject") Project project, BindingResult result, Principal principal) {
+		
 		String username = principal.getName();
 		project.setEmployer((Employer) userService.findOneByUsername(username));
+		if(result.hasErrors()){
+			return "redirect:/employer/profile.html";
+		}
 		projectService.saveProject(project);
 		return "redirect:/employer/profile.html";
-	}
 
+	}
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(Category.class, new CategoryEditor(categoryService));

@@ -29,6 +29,6 @@ public interface UserService {
 
 	public void saveFreelancerInProject(Project project, Freelancer freelancer);
 
-	public Employer findEmployerByName(String username);
+	Freelancer findFreelancerByUserName(String username);
 
 }

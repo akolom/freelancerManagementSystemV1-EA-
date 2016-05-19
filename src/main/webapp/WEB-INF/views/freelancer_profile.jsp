@@ -14,7 +14,7 @@
 
 	<br>
 
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
@@ -24,19 +24,46 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand"
-				href="<spring:url value="/projects/all.html"/>">NEON</a>
+			<a class="navbar-brand" href='<spring:url value="/"/>'>NEON</a>
 		</div>
-		
-		<div id="navbar" class="collapse navbar-collapse">
+		<div id="navbar">
 			<ul class="nav navbar-nav">
-
-				<li><a href="<spring:url value="/projects/all.html"/>">Projects</a></li>
-				<li class="active"><a href="#">Profile</a></li>
-				<li ><a href="<spring:url value="/projects/freelancer_project.html"/>">Applied Projects</a></li>
+				<security:authorize access="hasRole('ROLE_FL')">
+					<li><a href="<spring:url value="/projects/all.html"/>">Projects</a></li>
+					<li class="active"><a
+						href="<spring:url value="/freelancer/profile.html"/>">Profile</a></li>
+					<li><a
+						href="<spring:url value="/projects/freelancer_project.html"/>">Applied
+							Projects</a></li>
+				</security:authorize>
+				<security:authorize access="hasRole('ROLE_EMP')">
+					<li><a href='<spring:url value="/employer/profile.html"/>'>Profile</a></li>
+				</security:authorize>
 			</ul>
+			<security:authorize access="isAnonymous()">
+				<form class="navbar-form navbar-right"
+					action='<spring:url value="/login"/>' method="post">
+					<div class="form-group">
+						<input name="userName" type="text" placeholder="Username"
+							class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="password" name="password" placeholder="Password"
+							class="form-control">
+					</div>
+					<button type="submit" class="btn btn-success">Sign in</button>
+
+					<a href='<spring:url value="/signup.html"/>' class="btn btn-info">Sign
+						Up</a>
+				</form>
+			</security:authorize>
+			<security:authorize access="isAuthenticated()">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href='<spring:url value="/logout"/>'>Log Out</a></li>
+				</ul>
+			</security:authorize>
 		</div>
-		<!--/.nav-collapse -->
+		<!--/.navbar-collapse -->
 	</div>
 	</nav>
 
@@ -161,12 +188,12 @@
 
 
 		</div>
-		
+
 	</div>
 	<br>
-			
 
-				<%@ include file="/WEB-INF/import/footer.jsp"%>
+
+	<%@ include file="/WEB-INF/import/footer.jsp"%>
 
 
 

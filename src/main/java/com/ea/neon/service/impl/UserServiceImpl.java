@@ -164,13 +164,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Employer findEmployerByName(String username) {
-		Employer employer = employerRepository.findOneByFirstName(username);
-		System.out.println(employer.getFirstName());
-		employer.setAddresses(addressRepository.findAllByUser(employer));
-		employer.getCredentials();
-		employer.getProfile();
-		return employer;
+	public Freelancer findFreelancerByUserName(String username) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

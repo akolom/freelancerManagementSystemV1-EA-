@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @DiscriminatorValue(value = "employeer")
 public class Employer extends User implements Serializable {
@@ -17,7 +19,7 @@ public class Employer extends User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 5506187625983921769L;
-
+	
 	private Integer projectCompleted;
 
 	@OneToMany(mappedBy = "employer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 public class Certifications implements Serializable {
 
@@ -18,7 +20,8 @@ public class Certifications implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
-
+	
+	
 	private String award;
 
 	private String organization;

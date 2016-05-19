@@ -14,39 +14,66 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-				aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand"
-				href="<spring:url value="/projects/all.html"/>">NEON</a>
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href='<spring:url value="/"/>'>NEON</a>
+			</div>
+			<div id="navbar">
+				<ul class="nav navbar-nav">
+					<security:authorize access="hasRole('ROLE_FL')">
+						<li class="active"><a href="<spring:url value="/projects/all.html"/>">Projects</a></li>
+						<li><a
+							href="<spring:url value="/freelancer/profile.html"/>">Profile</a></li>
+						<li><a
+							href="<spring:url value="/projects/freelancer_project.html"/>">Applied
+								Projects</a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('ROLE_EMP')">
+						<li><a href='<spring:url value="/employer/profile.html"/>'>Profile</a></li>
+					</security:authorize>
+				</ul>
+				<security:authorize access="isAnonymous()">
+					<form class="navbar-form navbar-right"
+						action='<spring:url value="/login"/>' method="post">
+						<div class="form-group">
+							<input name="userName" type="text" placeholder="Username"
+								class="form-control">
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" placeholder="Password"
+								class="form-control">
+						</div>
+						<button type="submit" class="btn btn-success">Sign in</button>
+						
+						<a href='<spring:url value="/signup.html"/>' class="btn btn-info">Sign
+							Up</a>
+					</form>
+				</security:authorize>
+				<security:authorize access="isAuthenticated()">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href='<spring:url value="/logout"/>'>Log Out</a></li>
+					</ul>
+				</security:authorize>
+			</div>
+			<!--/.navbar-collapse -->
 		</div>
-		
-		<div id="navbar" class="collapse navbar-collapse">
-			<ul class="nav navbar-nav">
-
-				<li class="active"><a href="#">Projects</a></li>
-				<li><a href="<spring:url value="/freelancer/profile.html?id=5"/>">Profile</a></li>
-				<li ><a href="<spring:url value="/projects/freelancer_project.html"/>">Applied Projects</a></li>
-			</ul>
-		</div>
-		<!--/.nav-collapse -->
-	</div>
 	</nav>
-<br>
-<br>
-<br>
-<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<span id="a"></span>
 	<div class="row">
 		<div class="col-lg-1"></div>
-		<div class="col-lg-3" >
+		<div class="col-lg-3">
 			<div class="row">
 				<form:form commandName="projectSearch" method="post"
 					action='/FreelanceManagementSystem/projects/filterSearch.html'>
@@ -59,6 +86,7 @@
 					<form:select path="skills" items="${skill}"
 						itemLabel="skillTitle.text" itemValue="id" multiple="true"
 						cssClass="selectpicker">
+						
 					</form:select>
 					<br>
 					<br>
@@ -114,29 +142,24 @@
 						<div class="col-lg-4">
 
 
-							<a href='<spring:url value="/projects/applyProject.html?id=${project.id}"/>' 
-								class="btn btn-primary">  Apply  </a>  
+							<a
+								href='<spring:url value="/projects/applyProject.html?id=${project.id}"/>'
+								class="btn btn-primary"> Apply </a>
 
-<<<<<<< HEAD
-	<div class="container">
-		<h1>Welcome Neons</h1>
-		<h1>Succefully Authenticate Congratulation</h1>
-=======
-							<br>&#36; ${project.budget}<br>
 
+								<br>&#36; ${project.budget}<br>
 
 						</div>
-					</div>
-					<hr>
+						</div>
+						<hr>
 				</c:forEach>
 
 			</c:if>
 
 		</div>
 		<div class="col-lg-2"></div>
->>>>>>> origin/sabeen
 	</div>
 
-				<%@ include file="/WEB-INF/import/footer.jsp"%>
+	<%@ include file="/WEB-INF/import/footer.jsp"%>
 </body>
 </html>

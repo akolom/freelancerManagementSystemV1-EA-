@@ -47,4 +47,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	@Query(nativeQuery = true, value = "select * from Project where id in ( select projects_id from Freelancer_Project where "
 			+ "freelancers_id=?1)")
 	List<Project> findByFreelancer(Integer id);
+	
+	
+	
 }

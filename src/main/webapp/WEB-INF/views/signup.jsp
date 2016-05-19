@@ -14,7 +14,7 @@
 </head>
 <body>
 
-	<p>Sin up Form</p>
+	<h2>Sin up Form</h2>
 
 
 
@@ -50,8 +50,8 @@
 
 			<form:select path="credentials.authority.name" items="${authority}"
 				itemLabel="name" itemValue="name"></form:select>
- 
-			
+
+
 
 
 

@@ -25,9 +25,9 @@
 			<security:password-encoder hash="bcrypt" />
 			<security:jdbc-user-service
 				data-source-ref="dataSource"
-				users-by-username-query="select userName, password, enabled from credentials where userName = ?"
+				users-by-username-query="select userName, password, enabled from Credentials where userName = ?"
 				authorities-by-username-query="select c.userName, a.role from
-					credentials c, authority a where
+					Credentials c, Authority a where
 					c.credentials = a.id and c.userName
 					= ?" />
 		</security:authentication-provider>

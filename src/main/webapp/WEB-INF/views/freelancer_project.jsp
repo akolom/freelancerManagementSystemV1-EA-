@@ -13,32 +13,57 @@
 <%@ include file="/WEB-INF/import/links.jsp"%>
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-				aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand"
-				href="<spring:url value="/projects/all.html"/>">NEON</a>
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href='<spring:url value="/"/>'>NEON</a>
+			</div>
+			<div id="navbar">
+				<ul class="nav navbar-nav">
+					<security:authorize access="hasRole('ROLE_FL')">
+						<li><a href="<spring:url value="/projects/all.html"/>">Projects</a></li>
+						<li><a
+							href="<spring:url value="/freelancer/profile.html"/>">Profile</a></li>
+						<li class="active"><a
+							href="<spring:url value="/projects/freelancer_project.html"/>">Applied
+								Projects</a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('ROLE_EMP')">
+						<li><a href='<spring:url value="/employer/profile.html"/>'>Profile</a></li>
+					</security:authorize>
+				</ul>
+				<security:authorize access="isAnonymous()">
+					<form class="navbar-form navbar-right"
+						action='<spring:url value="/login"/>' method="post">
+						<div class="form-group">
+							<input name="userName" type="text" placeholder="Username"
+								class="form-control">
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" placeholder="Password"
+								class="form-control">
+						</div>
+						<button type="submit" class="btn btn-success">Sign in</button>
+						
+						<a href='<spring:url value="/signup.html"/>' class="btn btn-info">Sign
+							Up</a>
+					</form>
+				</security:authorize>
+				<security:authorize access="isAuthenticated()">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href='<spring:url value="/logout"/>'>Log Out</a></li>
+					</ul>
+				</security:authorize>
+			</div>
+			<!--/.navbar-collapse -->
 		</div>
-
-		<div id="navbar" class="collapse navbar-collapse">
-			<ul class="nav navbar-nav">
-
-				<li><a href="<spring:url value="/projects/all.html"/>">Projects</a></li>
-				<li><a
-					href="<spring:url value="/freelancer/profile.html?id=5"/>">Profile</a></li>
-				<li class="active"><a href="#">Applied Projects</a></li>
-
-			</ul>
-		</div>
-		<!--/.nav-collapse -->
-	</div>
 	</nav>
 	<br>
 	<br>
@@ -74,9 +99,20 @@
 							${project.status.projectStatus.text}</span>&nbsp;&nbsp;
 
 					</h4>
+					
 
 				</div>
+				
+				
+			<%-- <%-- 	<div class="col-lg-1">
 
+					<h4>
+						<a href="<spring:url value="/employer/profile.html?id="+${project.employer.id} />">${project.employer.firstname}</a>
+					</h4>
+					
+
+				</div>
+ --%> 
 			</div>
 			<hr>
 		</c:forEach>

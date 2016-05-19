@@ -1,6 +1,7 @@
 package com.ea.neon.controller;
 
 import java.beans.PropertyEditorSupport;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import com.ea.neon.domain.Status;
 import com.ea.neon.domain.Status.ProjectStatus;
 import com.ea.neon.dto.ProjectApplyDTO;
 import com.ea.neon.dto.ProjectSearchDTO;
+import com.ea.neon.repository.EmployerRepository;
 import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.sender.MessageSender;
 import com.ea.neon.service.CategoryService;
@@ -53,6 +55,9 @@ public class ProjectController {
 	UserService userService;
 	@Autowired
 	ProjectRepository projectRepository;
+
+	@Autowired
+	EmployerRepository employerRepository;
 
 	@ModelAttribute("userStory")
 	public Project getProject() {
@@ -88,17 +93,19 @@ public class ProjectController {
 		return "redirect:/email/forHiring.html?f_id=" + freelancerId + "&&p_id=" + projectId;
 	}
 
-	@RequestMapping(value = "/projects/all", method = RequestMethod.GET)
-	public String listProjects(Model model) {
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public String listProjects(Model model, Principal principal) {
+		Freelancer freelancer = userService.findFreelancerByUserName(principal.getName());
 		model.addAttribute("category", categoryService.findAll());
 		model.addAttribute("skill", skillService.findAll());
-		model.addAttribute("listProject", projectService.findAll(19));
+		model.addAttribute("listProject", projectService.findAll(freelancer.getId()));
 		return "project_read";
 	}
 
-	@RequestMapping(value = "/projects/freelancer_project", method = RequestMethod.GET)
-	public String freelancerProject(Model model) {
-		model.addAttribute("listProject", projectService.findAllAppliedProjects(19));
+	@RequestMapping(value = "/freelancer_project", method = RequestMethod.GET)
+	public String freelancerProject(Model mode, Principal principal) {
+		Freelancer freelancer = userService.findFreelancerByUserName(principal.getName());
+		mode.addAttribute("listProject", projectService.findAllAppliedProjects(freelancer.getId()));
 		return "freelancer_project";
 	}
 
@@ -107,46 +114,47 @@ public class ProjectController {
 		return new ProjectSearchDTO();
 	}
 
-	@RequestMapping(value = "/projects/applyProject", method = RequestMethod.GET)
-	public String applyProject(@RequestParam Integer id) {
+	@RequestMapping(value = "/applyProject", method = RequestMethod.GET)
+	public String applyProject(@RequestParam Integer id, Principal principal) {
 
 		Project project = projectService.findById(id);
-
-		Freelancer akolom = new Freelancer();
-
-		akolom.setFirstName("ako");
-		akolom.setLastName("sa");
-		userService.save(akolom);
+		Freelancer freelancer = userService.findFreelancerByUserName(principal.getName());
 		ProjectApplyDTO projectApplyDTO = new ProjectApplyDTO();
-		projectApplyDTO.setFreelancer(akolom);
+		projectApplyDTO.setFreelancer(freelancer);
 		projectApplyDTO.setProject(project);
 		messageSender.sendMessage(projectApplyDTO);
 
 		return "redirect:freelancer_project.html";
 	}
 
-	@RequestMapping(value = "/projects/search", method = RequestMethod.GET)
-	public String searchProjects(Model model, @RequestParam String search) {
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String searchProjects(Model model, @RequestParam String search, Principal principal) {
+		Freelancer freelancer = userService.findFreelancerByUserName(principal.getName());
+
 		model.addAttribute("category", categoryService.findAll());
 		model.addAttribute("skill", skillService.findAll());
-		model.addAttribute("listProject", projectService.findAllNotAppliedprojects(search, 19));
+		model.addAttribute("listProject", projectService.findAllNotAppliedprojects(search, freelancer.getId()));
 		return "project_read";
 	}
 
-	@RequestMapping(value = "/projects/filterSearch", method = RequestMethod.POST)
-	public String filterSearch(Model model, @ModelAttribute("projectSearch") ProjectSearchDTO projectSearchDTO) {
+	@RequestMapping(value = "/filterSearch", method = RequestMethod.POST)
+	public String filterSearch(Model model, @ModelAttribute("projectSearch") ProjectSearchDTO projectSearchDTO,
+			Principal principal) {
+		Freelancer freelancer = userService.findFreelancerByUserName(principal.getName());
+
 		CategoryTitle categoryTitle = projectSearchDTO.getCategory().getCategoryTitle();
 		List<SkillTitle> skills = new ArrayList<>();
+
 		for (Skills s : projectSearchDTO.getSkills()) {
 			skills.add(s.getSkillTitle());
 		}
-
 		Double maxBudget = projectSearchDTO.getMaxBudget();
 
 		model.addAttribute("category", categoryService.findAll());
 		model.addAttribute("skill", skillService.findAll());
 
-		model.addAttribute("listProject", projectService.findAllByFilter(19, skills, categoryTitle, 1.0, maxBudget));
+		model.addAttribute("listProject",
+				projectService.findAllByFilter(freelancer.getId(), skills, categoryTitle, 1.0, maxBudget));
 		return "project_read";
 	}
 

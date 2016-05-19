@@ -15,6 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.ea.neon.validation.aspect.EmptyOrSize;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User implements Serializable {
@@ -28,13 +33,17 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
+	@Email(message="Must be a valid email address")
 	private String email;
 
+	@NotEmpty(message="{NotEmpty}")
 	private String firstName;
 
 	private String lastName;
 
+	@EmptyOrSize(min=8,max=13,message="{EmptyOrSize}")
 	private String contact;
+	
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Address> addresses;
