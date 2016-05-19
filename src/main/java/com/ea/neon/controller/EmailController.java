@@ -54,7 +54,7 @@ public class EmailController {
 		} catch (MessagingException e) {
 			model.addAttribute("error", true);
 		}
-		return "redirect:/employer/profile.html?id=4";
+		return "redirect:/employer/profile.html?id=3";
 	}
 
 	@RequestMapping("/forHiring")
@@ -65,12 +65,17 @@ public class EmailController {
 			User freelancer = userService.findUserById(freelancerId);
 			emailService.sendHiringEmail((Freelancer) freelancer, project, new Locale("en"));
 
+			Status status = statusService.getStatusByProjectStatus(ProjectStatus.ACCEPTED);
+			project.setStatus(status);
+
+			projectService.updateProject(project);
+
 			model.addAttribute("error", false);
 			model.addAttribute("f", freelancer);
 		} catch (MessagingException e) {
 			model.addAttribute("error", true);
 		}
-		return "redirect:/employer/profile.html?id=4";
+		return "redirect:/employer/profile.html?id=3";
 	}
 
 }

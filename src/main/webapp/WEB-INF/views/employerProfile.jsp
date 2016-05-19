@@ -121,7 +121,7 @@
 									Category</label>
 								<div class="col-sm-10">
 									<form:select cssClass="selectpicker" path="category"
-										items="${categories }" itemLabel="categoryTitle"
+										items="${categories }" itemLabel="categoryTitle.text"
 										itemValue="id" />
 								</div>
 							</div>
@@ -130,9 +130,6 @@
 									Skills</label>
 								<div class="col-sm-10">
 									<form:select path="skills" multiple="true"></form:select>
-									<%-- <form:select cssClass="selectpicker" path="category"
-										items="${categories }" itemLabel="categoryTitle"
-										itemValue="id" /> --%>
 								</div>
 							</div>
 							<div class="form-group">
@@ -159,13 +156,13 @@
 											</div>
 											<div class="row">
 												<div class="col-md-3">Category</div>
-												<div class="col-md-9 text-center">${project.category.categoryTitle}</div>
+												<div class="col-md-9 text-center">${project.category.categoryTitle.text}</div>
 											</div>
 											<div class="row">
 												<div class="col-md-3">Skills</div>
 												<div class="col-md-9 text-center">
 												<c:forEach items="${project.skills }" var="skill">
-													${skill.skillTitle}
+													${skill.skillTitle.text}
 													&nbsp;&nbsp;
 												</c:forEach>
 												</div>
@@ -179,12 +176,6 @@
 											<button type="button"
 												class="btn btn-primary editProjectTrigger"
 												value="${project.id}">Edit Project</button>
-											<%-- <a href="${project.id}" id="editProjectTrigger"
-												class="btn btn-primary">Edit Project</a>
-											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-primary btn-lg"
-												data-toggle="modal" data-target="#myModal">Launch
-												demo modal</button> --%>
 										</div>
 									</div>
 									<br>
@@ -197,7 +188,7 @@
 											</div>
 											<div class="col-lg-4">
 												<c:if
-													test="${(project.status.projectStatus != 'CALL_FOR_INTERVIEW') && (project.status.projectStatus != 'ACCEPTED')}">
+													test="${(project.status.projectStatus == 'PENDING') && (project.status.projectStatus != 'ACCEPTED')}">
 													<a
 														href='<spring:url value="/email/forInterview.html?f_id=${freelancer.id}&&p_id=${project.id}"/>'
 														class="btn btn-info">Email for interview</a>
@@ -266,7 +257,7 @@
 									Category</label>
 								<div class="col-sm-10">
 									<form:select cssClass="selectpicker edit-category" path="category"
-										items="${categories }" itemLabel="categoryTitle"
+										items="${categories }" itemLabel="categoryTitle.text"
 										itemValue="id" />
 								</div>
 							</div>
@@ -287,9 +278,6 @@
 								</div>
 							</div>
 						</form:form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -312,7 +300,6 @@
 				});
 				function successFunction(json) {
 					$.each(json, function(i, value) {
-						console.log(value.skillTitle);
 				           $('#skills').append($('<option>').text(value.skillTitle).attr('value', value.id));
 				    });
 				}
@@ -351,7 +338,6 @@
 				});
 				function successEditCategoryFunction(json) {
 					$.each(json, function(i, value) {
-						console.log(value.skillTitle);
 				           $('.edit-skills').append($('<option>').text(value.skillTitle).attr('value', value.id));
 				    });
 				}

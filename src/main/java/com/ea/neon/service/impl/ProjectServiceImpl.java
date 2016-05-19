@@ -13,10 +13,10 @@ import com.ea.neon.domain.Employer;
 import com.ea.neon.domain.Freelancer;
 import com.ea.neon.domain.Project;
 import com.ea.neon.domain.Skills.SkillTitle;
-import com.ea.neon.domain.Status;
 import com.ea.neon.domain.Status.ProjectStatus;
 import com.ea.neon.repository.FreelancerRepository;
 import com.ea.neon.repository.ProjectRepository;
+import com.ea.neon.repository.StatusRepository;
 import com.ea.neon.service.ProjectService;
 
 @Service
@@ -29,11 +29,12 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	private FreelancerRepository freelancerRepository;
 
+	@Autowired
+	private StatusRepository statusRepository;
+
 	@Override
 	public void saveProject(Project project) {
-		Status status = new Status();
-		status.setProjectStatus(ProjectStatus.PENDING);
-		project.setStatus(status);
+		project.setStatus(statusRepository.findOneByProjectStatus(ProjectStatus.PENDING));
 
 		projectRepository.save(project);
 	}

@@ -53,14 +53,14 @@ public class EmployerController {
 		employer.setProject(projects);
 		model.addAttribute("currentUser", employer);
 		model.addAttribute("categories", categoryService.findAll());
-		return "demoEmployerProfile";
+		return "employerProfile";
 	}
 
 	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
 	public String addProject(@ModelAttribute("newProject") Project project) {
-		project.setEmployer(userService.findEmployerById(4));
+		project.setEmployer(userService.findEmployerById(3));
 		projectService.saveProject(project);
-		return "redirect:/employer/profile.html?id=4";
+		return "redirect:/employer/profile.html?id=3";
 	}
 
 	@InitBinder

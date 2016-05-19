@@ -21,11 +21,14 @@ import com.ea.neon.domain.Profile;
 import com.ea.neon.domain.Project;
 import com.ea.neon.domain.Skills;
 import com.ea.neon.domain.Skills.SkillTitle;
+import com.ea.neon.domain.Status;
+import com.ea.neon.domain.Status.ProjectStatus;
 import com.ea.neon.domain.User;
 import com.ea.neon.repository.AuthorityRepository;
 import com.ea.neon.repository.CategoryRepository;
 import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.repository.SkillsRepository;
+import com.ea.neon.repository.StatusRepository;
 import com.ea.neon.repository.UserRepository;
 import com.ea.neon.service.ProjectService;
 import com.ea.neon.service.UserService;
@@ -55,6 +58,9 @@ public class InitServiceImpl {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	private StatusRepository statusRepository;
+
 	@PostConstruct
 	public void init() {
 
@@ -68,12 +74,23 @@ public class InitServiceImpl {
 
 		authorityRepository.save(authority);
 
+		Authority authority1 = new Authority();
+		authority1.setName("Admin");
+		authority1.setRole("ROLE_ADMIN");
+
+		authorityRepository.save(authority1);
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		Credentials credentials = new Credentials();
 		credentials.setUserName("employer");
 		credentials.setPassword(encoder.encode("employer"));
 		credentials.setAuthority(authority);
+
+		Credentials credentials1 = new Credentials();
+		credentials1.setUserName("admin");
+		credentials1.setPassword(encoder.encode("admin"));
+		credentials1.setAuthority(authority1);
 
 		User employer = new Employer();
 		employer.setFirstName("employer");
@@ -90,6 +107,18 @@ public class InitServiceImpl {
 		user.setEmail("jobs@gmail.com");
 
 		userRepo.save(user);
+
+		Status status = new Status();
+		status.setProjectStatus(ProjectStatus.PENDING);
+		statusRepository.save(status);
+
+		Status status1 = new Status();
+		status1.setProjectStatus(ProjectStatus.CALL_FOR_INTERVIEW);
+		statusRepository.save(status1);
+
+		Status status2 = new Status();
+		status2.setProjectStatus(ProjectStatus.ACCEPTED);
+		statusRepository.save(status2);
 
 		Skills skillsAndroid = new Skills();
 		skillsAndroid.setSkillTitle(SkillTitle.ANDROID);
@@ -129,6 +158,11 @@ public class InitServiceImpl {
 
 		Freelancer freelancer = new Freelancer();
 		freelancer.setFirstName("freelancer");
+		freelancer.setLastName("freelancer");
+		freelancer.setEmail("ksav.sai52@gmail.com");
+		freelancer.setCredentials(credentials1);
+
+		userRepo.save(freelancer);
 
 		List<Freelancer> freelancers = Arrays.asList(freelancer);
 
@@ -159,28 +193,6 @@ public class InitServiceImpl {
 		freelancer.setProjects(Arrays.asList(project));
 
 		userRepo.save(freelancers);
-
-		Project toBeDeleted = new Project();
-		toBeDeleted.setName("To Be Deleted");
-		toBeDeleted.setCategory(category);
-		toBeDeleted.setBudget(100.00);
-		projectService.saveProject(toBeDeleted);
-
-		Freelancer akolom = new Freelancer();
-
-		akolom.setFirstName("ako");
-		akolom.setLastName("sa");
-		userService.save(akolom);
-
-		userService.saveFreelancerInProject(project, akolom);
-
-		List<Integer> idsss = new ArrayList<>();
-		idsss.add(17);
-		idsss.add(14);
-
-		List<SkillTitle> skillTitles = new ArrayList<>();
-		skillTitles.add(SkillTitle.ANDROID);
-		skillTitles.add(SkillTitle.JAVA);
 
 	}
 
