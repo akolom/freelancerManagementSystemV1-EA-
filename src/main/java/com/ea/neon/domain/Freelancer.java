@@ -80,6 +80,22 @@ public class Freelancer extends User {
 		return jobCompleted;
 	}
 
+	public List<Certifications> getCertifications() {
+		return certifications;
+	}
+
+	public void setCertifications(List<Certifications> certifications) {
+		this.certifications = certifications;
+	}
+
+	public List<Skills> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skills> skills) {
+		this.skills = skills;
+	}
+
 	public void setJobCompleted(Double jobCompleted) {
 		this.jobCompleted = jobCompleted;
 	}

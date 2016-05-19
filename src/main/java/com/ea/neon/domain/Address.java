@@ -9,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Address implements Serializable {
@@ -24,8 +26,11 @@ public class Address implements Serializable {
 	@GeneratedValue
 	private Integer id;
 
+	
+
 	private String city;
 
+	@Size(min=2,max=2)
 	private String state;
 
 	private String zip;

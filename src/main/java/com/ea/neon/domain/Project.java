@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -34,6 +35,18 @@ public class Project implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn
 	private Status status;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = {  CascadeType.MERGE })
+	@JoinColumn
+	private List<Skills> skills;
+
+	public List<Skills> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skills> skills) {
+		this.skills = skills;
+	}
 
 	@ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	private List<Freelancer> freelancers;
@@ -42,7 +55,7 @@ public class Project implements Serializable {
 	@JoinColumn
 	private Employer employer;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToOne(fetch = FetchType.EAGER, cascade = {  CascadeType.MERGE })
 	@JoinColumn
 	private Category category;
 

@@ -20,6 +20,7 @@ public interface UserService {
 	public User findUserById(Integer id);
 
 	public Employer findEmployerById(Integer id);
+	public Freelancer findFreelancerById(Integer id);
 	
 	public void saveFreelancerInProject(Project project, Freelancer freelancer);
 }

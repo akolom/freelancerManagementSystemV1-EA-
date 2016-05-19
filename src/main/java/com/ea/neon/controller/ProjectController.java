@@ -2,7 +2,6 @@ package com.ea.neon.controller;
 
 import java.beans.PropertyEditorSupport;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +18,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ea.neon.domain.Category;
 import com.ea.neon.domain.Category.CategoryTitle;
+import com.ea.neon.domain.Freelancer;
 import com.ea.neon.domain.Project;
 import com.ea.neon.domain.Skills;
 import com.ea.neon.domain.Skills.SkillTitle;
+import com.ea.neon.dto.ProjectApplyDTO;
 import com.ea.neon.dto.ProjectSearchDTO;
+import com.ea.neon.repository.ProjectRepository;
+import com.ea.neon.sender.MessageSender;
 import com.ea.neon.service.CategoryService;
 import com.ea.neon.service.ProjectService;
 import com.ea.neon.service.SkillService;
-import com.mysql.fabric.xmlrpc.base.Array;
+import com.ea.neon.service.UserService;
 
 @Controller
 public class ProjectController {
-
+	@Autowired
+	MessageSender messageSender;
+	
 	@Autowired
 	ProjectService projectService;
 	@Autowired
@@ -39,33 +44,67 @@ public class ProjectController {
 	@Autowired
 	SkillService skillService;
 	
+	@Autowired
+	UserService userService;
+	@Autowired
+	ProjectRepository projectRepository;
+	
 	@ModelAttribute("userStory")
 	public Project getProject() {
 		return new Project();
 	}
 
-	@RequestMapping(value = "/products/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/projects/all", method = RequestMethod.GET)
 	public String listProjects(Model model) {
 		model.addAttribute("category", categoryService.findAll());
 		model.addAttribute("skill", skillService.findAll());
-		model.addAttribute("listProject", projectService.findAll());
+		model.addAttribute("listProject", projectService.findAll(19));
 		return "project_read";
 	}
+	
+	@RequestMapping(value = "/projects/freelancer_project", method = RequestMethod.GET)
+	public String freelancerProject(Model model) {		
+		model.addAttribute("listProject", projectService.findAllAppliedProjects(19));
+		return "freelancer_project";
+	}
+	
 	
 	@ModelAttribute("projectSearch")
 	public ProjectSearchDTO projectSearchDetails(){
 		return new ProjectSearchDTO();
 	}
 	
-	@RequestMapping(value = "/products/search", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/projects/applyProject", method = RequestMethod.GET)
+	public String applyProject(@RequestParam Integer id) {
+		
+
+		Project project = projectService.findById(id);
+		
+		Freelancer akolom = new Freelancer();
+		
+		akolom.setFirstName("ako");
+		akolom.setLastName("sa");
+		userService.save(akolom);
+		ProjectApplyDTO projectApplyDTO = new ProjectApplyDTO();
+		projectApplyDTO.setFreelancer(akolom);
+		projectApplyDTO.setProject(project);
+		messageSender.sendMessage(projectApplyDTO);
+				
+		return "redirect:freelancer_project.html";
+	}
+	
+	@RequestMapping(value = "/projects/search", method = RequestMethod.GET)
 	public String searchProjects(Model model,@RequestParam String search) {
-		model.addAttribute("listProject", projectService.findByTitleAndDesc(search));
+		model.addAttribute("category", categoryService.findAll());
+		model.addAttribute("skill", skillService.findAll());
+		model.addAttribute("listProject", projectService.findAllNotAppliedprojects(search, 19));
 		return "project_read";
 	}
 	
 	
 
-	@RequestMapping(value = "/products/filterSearch", method = RequestMethod.POST)
+	@RequestMapping(value = "/projects/filterSearch", method = RequestMethod.POST)
 	public String filterSearch(Model model,@ModelAttribute("projectSearch") ProjectSearchDTO projectSearchDTO) {
 		CategoryTitle categoryTitle = projectSearchDTO.getCategory().getCategoryTitle();
 		List<SkillTitle> skills = new ArrayList<>();
@@ -77,18 +116,19 @@ public class ProjectController {
 				
 		model.addAttribute("category", categoryService.findAll());
 		model.addAttribute("skill", skillService.findAll());	
-		model.addAttribute("listProject", projectService.findBySelection(skills, categoryTitle, 1.0, maxBudget));
+		
+		model.addAttribute("listProject", projectService.findAllByFilter(19,skills, categoryTitle, 1.0, maxBudget));
 		return "project_read";
 	}
 	
-	@RequestMapping(value = "/products/searchFilter", method = RequestMethod.GET)
-	public String searchProjectsByFilter(Model model,@RequestParam String skillTitles, 
-			@RequestParam String categoryTitle, @RequestParam Double minBudget, @RequestParam Double maxBudget) {
-		List<SkillTitle> skills = new ArrayList<>();
-		skills.add(SkillTitle.fromString(skillTitles));
-		model.addAttribute("listProject", projectService.findBySelection(skills, CategoryTitle.fromString(categoryTitle), minBudget, maxBudget));
-		return "project_read";
-	}
+//	@RequestMapping(value = "/projects/searchFilter", method = RequestMethod.GET)
+//	public String searchProjectsByFilter(Model model,@RequestParam String skillTitles, 
+//			@RequestParam String categoryTitle, @RequestParam Double minBudget, @RequestParam Double maxBudget) {
+//		List<SkillTitle> skills = new ArrayList<>();
+//		skills.add(SkillTitle.fromString(skillTitles));
+//		model.addAttribute("listProject", projectService.findBySelection(skills, CategoryTitle.fromString(categoryTitle), minBudget, maxBudget));
+//		return "project_read";
+//	}
 	
 	
 	@InitBinder
