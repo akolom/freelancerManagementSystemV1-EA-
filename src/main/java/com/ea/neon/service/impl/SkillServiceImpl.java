@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ea.neon.domain.Skills;
+import com.ea.neon.domain.Skills.SkillTitle;
 import com.ea.neon.repository.SkillsRepository;
 import com.ea.neon.service.SkillService;
 
@@ -25,6 +26,11 @@ public class SkillServiceImpl implements SkillService {
 	@Override
 	public Skills getSkillById(Integer id) {
 		return skillsRepository.findOne(id);
+	}
+
+	@Override
+	public Skills getSkillBySkillTitle(SkillTitle skillTitle) {
+		return skillsRepository.findOneBySkillTitle(skillTitle);
 	}
 
 }

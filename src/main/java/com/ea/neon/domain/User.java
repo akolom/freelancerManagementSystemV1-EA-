@@ -55,7 +55,7 @@ public class User implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_profile")
 	private Profile profile;
-	
+
 	public List<Address> getAddresses() {
 		return addresses;
 	}

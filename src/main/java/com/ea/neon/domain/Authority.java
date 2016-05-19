@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 @Entity
 public class Authority implements Serializable {
 
@@ -21,12 +19,12 @@ public class Authority implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
-
 	private String name;
+
+	private boolean enabled;
 
 	private String role;
 
-	@JsonIgnore
 	@OneToOne(mappedBy = "authority", fetch = FetchType.LAZY)
 	private Credentials credentials;
 
@@ -36,14 +34,6 @@ public class Authority implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getRole() {
@@ -60,6 +50,22 @@ public class Authority implements Serializable {
 
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }

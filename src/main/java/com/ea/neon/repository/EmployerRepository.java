@@ -9,5 +9,6 @@ import com.ea.neon.domain.Project;
 
 public interface EmployerRepository extends JpaRepository<Employer, Integer> {
 
-	List<Employer> findByProject(List<Project> projects);
+
+	
 }

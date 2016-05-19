@@ -14,6 +14,10 @@
 
 	<div class="container">
 		<h1>Welcome Neons</h1>
+		
+		<a href="<spring:url value='/loginpage.html' />" class="btn btn-default pull-right"> Login</a>
+		<a href="<spring:url value='/signup.html' />" class="btn btn-default pull-right"> SignUP</a>
+		<%-- <a href="<spring:url value='/logout.html' />" class="btn btn-default pull-right"> LogOut</a> --%>
 	</div>
 
 </body>

@@ -1,6 +1,7 @@
 package com.ea.neon.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.StaleObjectStateException;
@@ -28,8 +29,6 @@ import com.ea.neon.validation.aspect.ServiceValidation;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-	
-	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -38,26 +37,25 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private EducationRepository educationRepository;
-	
-
-	@Autowired
-	private FreelancerRepository freelancerRepository;
 
 	@Autowired
 	private AddressRepository addressRepository;
 
 	@Autowired
+	private FreelancerRepository freelancerRepository;
+
+	@Autowired
 	private CertificationsRepository certificationsRepository;
-	
+
 	@Autowired
 	private SkillsRepository skillsRepository;
-	
+
 	@Autowired
 	private ProjectRepository projectRepository;
-	
+
 	@Autowired
 	private ExperienceRepository experienceRepository;
-	
+
 	public void save(User user) {
 		userRepository.save(user);
 	}
@@ -72,6 +70,9 @@ public class UserServiceImpl implements UserService {
 
 	@ServiceValidation
 	public User update(User user) {
+
+		// userRepository.update(user);
+
 		try {
 			return userRepository.save(user);
 		} catch (StaleObjectStateException e) {
@@ -79,8 +80,12 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}
 	}
-	
+
 	@Override
+	public User findOneByUsername(String userName) {
+		return userRepository.findOneByCredentialsUserName(userName);
+	}
+
 	public void saveFreelancerInProject(Project project, Freelancer freelancer) {
 		List<Project> projects = freelancer.getProjects();
 		if (projects == null) {
@@ -88,7 +93,7 @@ public class UserServiceImpl implements UserService {
 		}
 		projects.add(project);
 		freelancer.setProjects(projects);
-		userRepository.save(freelancer);	
+		userRepository.save(freelancer);
 	}
 
 	@Override
@@ -108,10 +113,10 @@ public class UserServiceImpl implements UserService {
 		employer.getProfile();
 		return employer;
 	}
-	
+
 	@Override
 	public Freelancer findFreelancerById(Integer id) {
-		
+
 		Freelancer freelancer = freelancerRepository.findOne(id);
 		freelancer.setAddresses(addressRepository.findAllByUser(freelancer));
 		freelancer.getCredentials();
@@ -121,9 +126,29 @@ public class UserServiceImpl implements UserService {
 		freelancer.setProjects(projectRepository.findByFreelancer(freelancer.getId()));
 		freelancer.setSkills(skillsRepository.findByFreelancer(freelancer.getId()));
 		freelancer.setExperiances(experienceRepository.findByFreelancer(freelancer.getId()));
-		
+
 		return freelancer;
 	}
 
+	@Override
+	public void removeProjectFromFreelancer(Freelancer freelancer, Project project) {
+		List<Project> projects = projectRepository.findAllByFreelancers(Arrays.asList(freelancer));
+		for (int i = 0; i < projects.size(); i++) {
+			if (projects.get(i).getId() == project.getId()) {
+				projects.remove(i);
+			}
+		}
+		freelancer.setProjects(projects);
+		freelancerRepository.save(freelancer);
+	}
+
+	@Override
+	public Employer findEmployerByUserName(String username) {
+		Employer employer = (Employer) userRepository.findOneByCredentialsUserName(username);
+		employer.setAddresses(addressRepository.findAllByUser(employer));
+		employer.getCredentials();
+		employer.getProfile();
+		return employer;
+	}
 
 }

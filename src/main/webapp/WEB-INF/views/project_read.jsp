@@ -117,6 +117,11 @@
 							<a href='<spring:url value="/projects/applyProject.html?id=${project.id}"/>' 
 								class="btn btn-primary">  Apply  </a>  
 
+<<<<<<< HEAD
+	<div class="container">
+		<h1>Welcome Neons</h1>
+		<h1>Succefully Authenticate Congratulation</h1>
+=======
 							<br>&#36; ${project.budget}<br>
 
 
@@ -129,6 +134,7 @@
 
 		</div>
 		<div class="col-lg-2"></div>
+>>>>>>> origin/sabeen
 	</div>
 
 				<%@ include file="/WEB-INF/import/footer.jsp"%>

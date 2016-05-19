@@ -35,7 +35,7 @@ public class Freelancer extends User {
 	@JoinColumn(name = "freelancer_education")
 	private List<Education> educations;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable
 	private List<Project> projects;
 
@@ -43,7 +43,7 @@ public class Freelancer extends User {
 	@JoinColumn
 	private List<Certifications> certifications;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn
 	private List<Skills> skills;
 

@@ -9,9 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.ea.neon.validation.aspect.EmptyOrSize;
@@ -37,12 +37,24 @@ public class Project implements Serializable {
 	@EmptyOrSize(min=16,max=1000,message="{EmptyOrSize}")
 	private String description;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn
 	private Status status;
-	
-	@OneToMany(fetch = FetchType.EAGER, cascade = {  CascadeType.MERGE })
+
+	@ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
+	private List<Freelancer> freelancers;
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinColumn
+	private Employer employer;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn
+	private Category category;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "Project_Skill", joinColumns = { @JoinColumn(name = "project_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "skill_id") })
 	private List<Skills> skills;
 
 	public List<Skills> getSkills() {
@@ -52,17 +64,6 @@ public class Project implements Serializable {
 	public void setSkills(List<Skills> skills) {
 		this.skills = skills;
 	}
-
-	@ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
-	private List<Freelancer> freelancers;
-
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinColumn
-	private Employer employer;
-
-	@OneToOne(fetch = FetchType.EAGER, cascade = {  CascadeType.MERGE })
-	@JoinColumn
-	private Category category;
 
 	public Status getStatus() {
 		return status;

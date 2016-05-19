@@ -3,7 +3,6 @@ package com.ea.neon.domain;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -54,7 +53,7 @@ public class Category implements Serializable {
 
 	private CategoryTitle categoryTitle;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn
 	private List<Skills> skills;
 

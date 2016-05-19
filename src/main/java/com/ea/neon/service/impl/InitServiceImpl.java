@@ -9,7 +9,6 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.test.web.servlet.result.StatusResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ea.neon.domain.Authority;
@@ -23,6 +22,7 @@ import com.ea.neon.domain.Project;
 import com.ea.neon.domain.Skills;
 import com.ea.neon.domain.Skills.SkillTitle;
 import com.ea.neon.domain.Status;
+import com.ea.neon.domain.Status.ProjectStatus;
 import com.ea.neon.domain.User;
 import com.ea.neon.repository.AuthorityRepository;
 import com.ea.neon.repository.CategoryRepository;
@@ -57,154 +57,55 @@ public class InitServiceImpl {
 	private AuthorityRepository authorityRepository;
 
 	@Autowired
-	private FreelancerRepository freelancerRepository;
-
-	
-	@Autowired
 	UserService userService;
 
-	
 	@Autowired
-	StatusRepository statusRepo;
-	
-	@Autowired
-	CategoryRepository categoryRepo;
-	
-	@Autowired
-	SkillsRepository skillRepo;
-	
+	private StatusRepository statusRepository;
+
 	@PostConstruct
 	public void init() {
 
 		Profile profile = new Profile();
 		profile.setProfessionalHeadLine("I am an employer. I will post my projects for freelancers");
 		profile.setProfileSummary("This is a test profile of an employer.");
-			/**
-			 * Authroity Creation 
-			 * 
-			 */
-		Authority authorityEmp = new Authority();
-		authorityEmp.setName("Employer");
-		authorityEmp.setRole("ROLE_EMP");
-		Authority authorityFreelancer = new Authority();
-		authorityFreelancer.setName("Freelancer");
-		authorityFreelancer.setRole("ROLE_FL");
-		Authority authorityAdmin = new Authority();
-		authorityFreelancer.setName("Admin");
-		authorityFreelancer.setRole("ROLE_ADMIN");
 
-		authorityRepository.save(authorityEmp);
-		authorityRepository.save(authorityFreelancer);
-		authorityRepository.save(authorityAdmin);
+		Authority authority = new Authority();
+		authority.setName("Employer");
+		authority.setRole("ROLE_EMP");
 
-		
-		/**
-		 *  Authority Creation End
-		 */
-		
-		/**
-		 * Skill Creation 
-		 * 
-		 */
-		Skills java = new Skills();
-		java.setSkillTitle(SkillTitle.JAVA);
-		skillRepo.save(java);
-		
-		Skills html = new Skills();
-		html.setSkillTitle(SkillTitle.HTML_HTML5);
-		skillRepo.save(html);
-		
-		Skills php = new Skills();
-		php.setSkillTitle(SkillTitle.PHP);
-		skillRepo.save(php);
-		
-		Skills js = new Skills();
-		js.setSkillTitle(SkillTitle.JAVASCRIPT);
-		skillRepo.save(js);
-		
-		Skills mySql = new Skills();
-		mySql.setSkillTitle(SkillTitle.MYSQL);
-		skillRepo.save(mySql);
-		
-		Skills cPro = new Skills();
-		cPro.setSkillTitle(SkillTitle.C_PROGRAMMING);
-		skillRepo.save(cPro);
-		
-		Skills jq = new Skills();
-		jq.setSkillTitle(SkillTitle.JQUERY);
-		skillRepo.save(jq);
-		
-		Skills cPlus = new Skills();
-		cPlus.setSkillTitle(SkillTitle.C_PLUS_PLUS);
-		skillRepo.save(cPlus);
-		
-		Skills cSharp = new Skills();
-		cSharp.setSkillTitle(SkillTitle.C_SHARP);
-		skillRepo.save(cSharp);
-		
-		Skills python = new Skills();
-		python.setSkillTitle(SkillTitle.PYTHON);
-		skillRepo.save(python);
-		
-		Skills android = new Skills();
-		android.setSkillTitle(SkillTitle.ANDROID);
-		skillRepo.save(android);
-		
-		Skills gDesign = new Skills();
-		gDesign.setSkillTitle(SkillTitle.GRAPHIC_DESIGN);
-		skillRepo.save(gDesign);
-		
-		Skills springMVC = new Skills();
-		springMVC.setSkillTitle(SkillTitle.SPRING_MVC);
-		skillRepo.save(springMVC);
-		
-		List<Skills> mobile = new ArrayList<>();
-		mobile.add(java);
-		mobile.add(android);
-		
-		List<Skills> web = new ArrayList<>();
-		web.add(html);
-		web.add(php);
-		web.add(js);
-		web.add(mySql);
-		web.add(cPro);
-		web.add(jq);
-		web.add(cPlus);
-		web.add(cSharp);
-		web.add(python);
-		web.add(gDesign);
-		web.add(springMVC);
-		
-		
-		/**
-		 *  Skill Creation End
-		 */
-		
-		/**
-		 *  Category Creation 
-		 */
-		
-		Category categoryWebSite = new Category();
-		categoryWebSite.setCategoryTitle(CategoryTitle.WEBSITE_IT_AND_SOFTWARE);
-		categoryWebSite.setSkills(web);
-		categoryRepo.save(categoryWebSite);
-		
-		Category categoryMobile = new Category();
-		categoryMobile.setCategoryTitle(CategoryTitle.MOBILE_PHONES_AND_COMPUTING);
-		categoryMobile.setSkills(mobile);
-		categoryRepo.save(categoryMobile);
-		
+		authorityRepository.save(authority);
 
-		/**
-		 *  Category Creation End
-		 */
-		
+		Authority authority1 = new Authority();
+		authority1.setName("Admin");
+		authority1.setRole("ROLE_ADMIN");
+
+		authorityRepository.save(authority1);
+
+		Authority authority2 = new Authority();
+		authority2.setName("Freelancer");
+		authority2.setRole("ROLE_FL");
+
+		authorityRepository.save(authority2);
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		Credentials credentials = new Credentials();
 		credentials.setUserName("employer");
 		credentials.setPassword(encoder.encode("employer"));
-		credentials.setAuthority(authorityEmp);
+		credentials.setAuthority(authority);
+		credentials.setEnabled(true);
+
+		Credentials credentials1 = new Credentials();
+		credentials1.setUserName("admin");
+		credentials1.setPassword(encoder.encode("admin"));
+		credentials1.setAuthority(authority1);
+		credentials1.setEnabled(true);
+
+		Credentials credentials3 = new Credentials();
+		credentials3.setUserName("freelancer");
+		credentials3.setPassword(encoder.encode("freelancer"));
+		credentials3.setAuthority(authority2);
+		credentials3.setEnabled(true);
 
 		User employer = new Employer();
 		employer.setFirstName("employer");
@@ -212,18 +113,28 @@ public class InitServiceImpl {
 		employer.setEmail("employer@gmail.com");
 		employer.setProfile(profile);
 		employer.setCredentials(credentials);
-		employer.setContact("98413141512");
 
 		userRepo.save(employer);
 
-		Freelancer user = new Freelancer();
+		User user = new Freelancer();
 		user.setFirstName("steve");
 		user.setFirstName("jobs");
 		user.setEmail("jobs@gmail.com");
-		user.setContact("989898989");
-		user.setCharge(50.00);
+		user.setCredentials(credentials3);
 
 		userRepo.save(user);
+
+		Status status = new Status();
+		status.setProjectStatus(ProjectStatus.PENDING);
+		statusRepository.save(status);
+
+		Status status1 = new Status();
+		status1.setProjectStatus(ProjectStatus.CALL_FOR_INTERVIEW);
+		statusRepository.save(status1);
+
+		Status status2 = new Status();
+		status2.setProjectStatus(ProjectStatus.ACCEPTED);
+		statusRepository.save(status2);
 
 		Skills skillsAndroid = new Skills();
 		skillsAndroid.setSkillTitle(SkillTitle.ANDROID);
@@ -263,9 +174,11 @@ public class InitServiceImpl {
 
 		Freelancer freelancer = new Freelancer();
 		freelancer.setFirstName("freelancer");
-		freelancer.setContact("989898989");
-		freelancer.setCharge(20.00);
-		freelancer.setEmail("sas@sasa.com");
+		freelancer.setLastName("freelancer");
+		freelancer.setEmail("ksav.sai52@gmail.com");
+		freelancer.setCredentials(credentials1);
+
+		userRepo.save(freelancer);
 
 		List<Freelancer> freelancers = Arrays.asList(freelancer);
 
@@ -281,6 +194,14 @@ public class InitServiceImpl {
 		project2.setName("Christmas");
 		project2.setDescription("Android App | Social Networking | Design | Lollipop");
 
+		project.setEmployer((Employer) employer);
+		Employer emp = project.getEmployer();
+		emp.setProjectCompleted(1);
+		project2.setEmployer(emp);
+		emp.setProjectCompleted(emp.getProjectCompleted() + 1);
+
+		userRepo.save(emp);
+
 		projectService.saveProject(project);
 
 		projectService.saveProject(project2);
@@ -289,47 +210,6 @@ public class InitServiceImpl {
 
 		userRepo.save(freelancers);
 
-		Project toBeDeleted = new Project();
-		toBeDeleted.setName("To Be Deleted");
-		toBeDeleted.setDescription("It was created for deletion, to be deleted");
-		toBeDeleted.setCategory(category);
-		toBeDeleted.setBudget(100.00);
-		projectService.saveProject(toBeDeleted);
-
-		Freelancer akolom = new Freelancer();
-
-		akolom.setFirstName("ako");
-		akolom.setLastName("sa");
-		akolom.setCharge(15.00);
-		akolom.setEmail("sasad@sdsfdsf.com");
-		akolom.setContact("9898989899");
-		userService.save(akolom);
-
-		userService.saveFreelancerInProject(project, akolom);
-		// userService.saveFreelancerInProject(toBeDeleted, akolom);
-
-		List<Integer> idsss = new ArrayList<>();
-		idsss.add(17);
-		idsss.add(14);
-
-		List<SkillTitle> skillTitles = new ArrayList<>();
-		skillTitles.add(SkillTitle.ANDROID);
-		skillTitles.add(SkillTitle.JAVA);
-
-		// System.out.println(projectRepo.findByDescAndTitleByNotApplied(idsss,
-		// "app"));
-		//
-
-		// System.out.println("start");
-		// for (Project p : projectRepo.findAllByFilter(idsss, skillTitles,
-		// CategoryTitle.MOBILE_PHONES_AND_COMPUTING, 1.0, 10000000.0))
-		// {
-		// System.out.println(p.getName()+" : Name");
-		// }
-		// System.out.println("end");
-		// for(Project p: projectRepo.findAllByProjectId(idsss)){
-		// System.out.println(p.getName());
-		// }
 	}
 
 }

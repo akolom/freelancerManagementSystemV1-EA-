@@ -1,6 +1,7 @@
 package com.ea.neon.controller;
 
 import java.beans.PropertyEditorSupport;
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,12 +17,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ea.neon.domain.Category;
 import com.ea.neon.domain.Employer;
 import com.ea.neon.domain.Project;
 import com.ea.neon.domain.Skills;
+import com.ea.neon.domain.Skills.SkillTitle;
 import com.ea.neon.service.CategoryService;
 import com.ea.neon.service.ProjectService;
 import com.ea.neon.service.SkillService;
@@ -38,10 +39,10 @@ public class EmployerController {
 	private CategoryService categoryService;
 
 	@Autowired
-	private SkillService skillService;
+	private ProjectService projectService;
 
 	@Autowired
-	private ProjectService projectService;
+	private SkillService skillService;
 
 	@ModelAttribute("newProject")
 	public Project getProject() {
@@ -49,14 +50,16 @@ public class EmployerController {
 	}
 
 	@RequestMapping(value = "/profile")
-	public String viewProfile(@RequestParam("id") Integer id, Model model) {
-		Employer employer = userService.findEmployerById(id);
+	public String viewProfile(Model model, Principal principal) {
+		String username = principal.getName();
+		Employer employer = userService.findEmployerByUserName(username);
 		List<Project> projects = projectService.findAllByEmployer(employer);
 		employer.setProject(projects);
 		model.addAttribute("currentUser", employer);
 		model.addAttribute("categories", categoryService.findAll());
 		model.addAttribute("skills", skillService.findAll());
-		return "demoEmployerProfile";
+
+		return "employerProfile";
 	}
 
 	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
@@ -76,8 +79,17 @@ public class EmployerController {
 		 * status.setProjectStatus(ProjectStatus.PENDING);
 		 * project.setStatus(status);
 		 */
+
+		return "employerProfile";
+	}
+
+	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
+	public String addProject(@ModelAttribute("newProject") Project project, Principal principal) {
+		String username = principal.getName();
+		project.setEmployer(userService.findEmployerByUserName(username));
+
 		projectService.saveProject(project);
-		return "redirect:/employer/profile.html?id=3";
+		return "redirect:/employer/profile.html";
 	}
 
 	@InitBinder
@@ -107,12 +119,17 @@ public class EmployerController {
 
 	@InitBinder
 	public void skillsBinder(ServletRequestDataBinder binder) {
-		binder.registerCustomEditor(List.class, "category.skills", new CustomCollectionEditor(List.class) {
+		binder.registerCustomEditor(List.class, "skills", new CustomCollectionEditor(List.class) {
 
 			protected Object convertElement(Object element) {
 				if (element != null) {
-					Integer id = Integer.parseInt(element.toString());
-					Skills skill = skillService.getSkillById(id);
+					Skills skill = new Skills();
+					try {
+						Integer id = Integer.parseInt(element.toString());
+						skill = skillService.getSkillById(id);
+					} catch (NumberFormatException e) {
+						skill = skillService.getSkillBySkillTitle(SkillTitle.valueOf(element.toString()));
+					}
 					return skill;
 				}
 				return null;
