@@ -24,14 +24,16 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Project name</a>
+			<a class="navbar-brand"
+				href="<spring:url value="/projects/all.html"/>">NEON</a>
 		</div>
+		
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 
 				<li><a href="<spring:url value="/projects/all.html"/>">Projects</a></li>
 				<li class="active"><a href="#">Profile</a></li>
-				<li><a href="#contact">Contact</a></li>
+				<li ><a href="<spring:url value="/projects/freelancer_project.html"/>">Applied Projects</a></li>
 			</ul>
 		</div>
 		<!--/.nav-collapse -->
@@ -154,11 +156,18 @@
 						</h4>
 					</div>
 				</div>
+
 			</div>
+
+
 		</div>
+		
 	</div>
 	<br>
-	<%@ include file="/WEB-INF/import/footer.jsp"%>
+			
+
+				<%@ include file="/WEB-INF/import/footer.jsp"%>
+
 
 
 </body>
