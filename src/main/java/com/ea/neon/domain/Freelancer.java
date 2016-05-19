@@ -11,6 +11,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @DiscriminatorValue(value = "freelancer")
 public class Freelancer extends User {
@@ -21,6 +23,7 @@ public class Freelancer extends User {
 	private static final long serialVersionUID = -2984456787460142966L;
 
 	private Double charge;
+
 
 	private Double jobCompleted;
 

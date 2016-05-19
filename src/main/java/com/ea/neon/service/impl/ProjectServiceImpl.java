@@ -16,6 +16,7 @@ import com.ea.neon.domain.Status.ProjectStatus;
 import com.ea.neon.repository.FreelancerRepository;
 import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.service.ProjectService;
+import com.ea.neon.validation.aspect.ServiceValidation;
 
 @Service
 @Transactional
@@ -28,6 +29,7 @@ public class ProjectServiceImpl implements ProjectService {
 	private FreelancerRepository freelancerRepository;
 
 	@Override
+	@ServiceValidation
 	public void saveProject(Project project) {
 		Status status = new Status();
 		status.setProjectStatus(ProjectStatus.PENDING);

@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.ea.neon.validation.aspect.EmptyOrSize;
+
 @Entity
 public class Project implements Serializable {
 
@@ -26,10 +28,13 @@ public class Project implements Serializable {
 	@GeneratedValue
 	private Integer id;
 
+	@EmptyOrSize(min=3,max=16,message="{EmptyOrSize}")
 	private String name;
 
+	
 	private Double budget;
 
+	@EmptyOrSize(min=16,max=1000,message="{EmptyOrSize}")
 	private String description;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })

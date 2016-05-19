@@ -22,13 +22,7 @@ public class HomeController {
 	
 	@RequestMapping({ "/", "/index" })
 	public String home() {
-		User user = new User();
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setEmail("john@Doe.com");
-		
 
-		userService.save(user);
 		return "welcome";
 	}
 

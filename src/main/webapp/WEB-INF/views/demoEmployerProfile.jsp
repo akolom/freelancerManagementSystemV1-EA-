@@ -37,7 +37,7 @@
 	</nav>
 	<br>
 	<br>
-	<br>	
+	<br>
 
 	<div class="container">
 		<div class="row">
@@ -117,6 +117,8 @@
 								<div class="col-sm-10">
 									<form:input path="name" cssClass="form-control"
 										placeholder="Project1" />
+									<form:errors path="name">
+									</form:errors>
 								</div>
 							</div>
 							<div class="form-group">
@@ -125,6 +127,8 @@
 								<div class="col-sm-10">
 									<form:textarea path="description" cssClass="form-control"
 										placeholder="This project deals with ...." />
+									<form:errors path="description">
+									</form:errors>
 								</div>
 							</div>
 							<div class="form-group">
@@ -133,6 +137,8 @@
 								<div class="col-sm-10">
 									<form:input path="budget" cssClass="form-control"
 										placeholder="100.00 $" />
+										<form:errors path="budget">
+									</form:errors>
 								</div>
 							</div>
 							<div class="form-group">

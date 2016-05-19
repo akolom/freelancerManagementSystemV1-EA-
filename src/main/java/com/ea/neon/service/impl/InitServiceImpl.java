@@ -85,13 +85,17 @@ public class InitServiceImpl {
 		employer.setEmail("employer@gmail.com");
 		employer.setProfile(profile);
 		employer.setCredentials(credentials);
+		employer.setContact("98413141512");
+		
 
 		userRepo.save(employer);
 
-		User user = new Freelancer();
+		Freelancer user = new Freelancer();
 		user.setFirstName("steve");
 		user.setFirstName("jobs");
 		user.setEmail("jobs@gmail.com");
+		user.setContact("989898989");
+		user.setCharge(50.00);
 
 		userRepo.save(user);
 
@@ -133,6 +137,10 @@ public class InitServiceImpl {
 
 		Freelancer freelancer = new Freelancer();
 		freelancer.setFirstName("freelancer");
+		freelancer.setContact("989898989");
+		freelancer.setCharge(20.00);
+		freelancer.setEmail("sas@sasa.com");
+		
 
 		List<Freelancer> freelancers = Arrays.asList(freelancer);
 
@@ -142,19 +150,13 @@ public class InitServiceImpl {
 		project.setName("App");
 		project.setCategory(category);
 		project.setFreelancers(freelancers);
+		
 
 		Project project2 = new Project();
 		project2.setBudget(10000.00);
 		project2.setName("Christmas");
 		project2.setDescription("Android App | Social Networking | Design | Lollipop");
 
-		project.setEmployer((Employer) employer);
-		Employer emp = project.getEmployer();
-		emp.setProjectCompleted(1);
-		project2.setEmployer(emp);
-		emp.setProjectCompleted(emp.getProjectCompleted() + 1);
-
-		userRepo.save(emp);
 
 		projectService.saveProject(project);
 
@@ -168,6 +170,7 @@ public class InitServiceImpl {
 		
 		Project toBeDeleted = new Project();
 		toBeDeleted.setName("To Be Deleted");
+		toBeDeleted.setDescription("It was created for deletion, to be deleted");
 		toBeDeleted.setCategory(category);
 		toBeDeleted.setBudget(100.00);
 		projectService.saveProject(toBeDeleted);
@@ -176,6 +179,9 @@ public class InitServiceImpl {
 		
 		akolom.setFirstName("ako");
 		akolom.setLastName("sa");
+		akolom.setCharge(15.00);
+		akolom.setEmail("sasad@sdsfdsf.com");
+		akolom.setContact("9898989899");
 		userService.save(akolom);
 		
 		

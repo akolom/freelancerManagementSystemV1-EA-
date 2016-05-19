@@ -27,14 +27,18 @@ public class Address implements Serializable {
 	private Integer id;
 
 	
-
+	@NotEmpty(message="{NotEmpty}")
 	private String city;
 
-	@Size(min=2,max=2)
+
+
+	@Size(min=2,max=2,message="{Size.state}")
 	private String state;
 
+	@NotEmpty(message="{NotEmpty}")
 	private String zip;
 
+	@NotEmpty(message="{NotEmpty}")
 	private String country;
 
 	private String street;

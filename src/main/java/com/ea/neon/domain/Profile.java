@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.ea.neon.validation.aspect.EmptyOrSize;
+
 @Entity
 public class Profile implements Serializable {
 
@@ -18,6 +22,7 @@ public class Profile implements Serializable {
 	@GeneratedValue
 	private Integer id;
 
+	@EmptyOrSize(min=10,max=100,message="{EmptyOrSize}")
 	private String professionalHeadLine;
 
 	public Integer getId() {
@@ -52,6 +57,7 @@ public class Profile implements Serializable {
 		this.rank = rank;
 	}
 
+	@EmptyOrSize(min=10,max=1000,message="{EmptyOrSize}")
 	private String profileSummary;
 
 	private Integer rank;

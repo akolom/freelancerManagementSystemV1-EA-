@@ -22,6 +22,7 @@ import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.repository.SkillsRepository;
 import com.ea.neon.repository.UserRepository;
 import com.ea.neon.service.UserService;
+import com.ea.neon.validation.aspect.ServiceValidation;
 
 @Service
 @Transactional
@@ -69,6 +70,7 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findOneByEmail(email);
 	}
 
+	@ServiceValidation
 	public User update(User user) {
 		try {
 			return userRepository.save(user);
@@ -77,6 +79,7 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}
 	}
+	
 	@Override
 	public void saveFreelancerInProject(Project project, Freelancer freelancer) {
 		List<Project> projects = freelancer.getProjects();
