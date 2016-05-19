@@ -40,6 +40,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User update(User user) {
+		
+		//userRepository.update(user);
+	
 		try {
 			return userRepository.save(user);
 		} catch (StaleObjectStateException e) {

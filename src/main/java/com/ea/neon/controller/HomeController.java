@@ -13,18 +13,18 @@ import com.ea.neon.service.impl.UserServiceImpl;
 @Controller
 public class HomeController {
 
-	@Autowired
-	private UserService userService;
+	/*@Autowired
+	private UserService userService;*/
 	
 	@RequestMapping({ "/", "/index" })
 	public String home() {
-		User user = new User();
+		/*User user = new User();
 		user.setFirstName("John");
 		user.setLastName("Doe");
 		user.setEmail("john@Doe.com");
 		
 
-		userService.save(user);
+		userService.save(user);*/
 		return "index";
 	}
 

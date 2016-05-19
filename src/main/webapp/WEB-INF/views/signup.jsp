@@ -50,7 +50,7 @@
 
 
 			<form:select path="credentials.authority.name" items="${authority}"
-				itemLabel="name" itemValue="id"></form:select>
+				itemLabel="name" itemValue="name"></form:select>
  
 			
 

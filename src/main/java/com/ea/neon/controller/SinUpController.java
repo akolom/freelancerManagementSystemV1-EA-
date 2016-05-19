@@ -45,11 +45,13 @@ public class SinUpController {
 		User validUser = userService.findOneByUsername(user.getCredentials().getUserName());
 
 		if (validUser != null) {
-			return "redirect:/index";
+			
+			model.addAttribute("message", "Your are already In role: Just sign in Please");
+			return "errorpage";
 		} else {
 			
-			/*authorityService.save(user.getCredentials().getAuthority());
-			credentialsService.save(user.getCredentials());*/
+			authorityService.save(user.getCredentials().getAuthority());
+			//credentialsService.save(user.getCredentials());
 			userService.save(user);
 			return "login";
 		}

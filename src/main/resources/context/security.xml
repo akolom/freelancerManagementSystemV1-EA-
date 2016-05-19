@@ -7,13 +7,15 @@
 	<security:http use-expressions="true">
 		<security:intercept-url pattern="/asdf**"
 			access="hasRole('ROLE_ADMIN')" />
-		<security:form-login login-page="/loginPage.html"
+			
+		<security:form-login login-page="/loginpage.html"
 			username-parameter="userName" password-parameter="password"
-			authentication-success-forward-url="/index.html"
+			authentication-success-forward-url="/viewpage.html"
 			authentication-failure-forward-url="/errorpage.html" />
 		<security:logout logout-url="/logout"
 			logout-success-url="/" />
 		<security:csrf disabled="true" />
+		
 	</security:http>
 
 	<security:authentication-manager>

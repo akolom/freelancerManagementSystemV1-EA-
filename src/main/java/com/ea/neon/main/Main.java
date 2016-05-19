@@ -1,18 +1,28 @@
 package com.ea.neon.main;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ea.neon.domain.Authority;
-import com.ea.neon.service.AuthorityService;
+import com.ea.neon.domain.User;
+import com.ea.neon.service.UserService;
 
 public class Main {
 	
+	@Autowired
+	private UserService userService;
+	
 	public static void main(String[] args) {
 		
+		(new Main()).checkMethod();
+		
+	}
+	
+	private  void checkMethod(){
+		
+		User user = userService.findOneByUsername("steve");
+		
+		System.out.println("FirstName: "+user.getFirstName());
+		System.out.println("FirstName: "+user.getLastName());
+		System.out.println("FirstName: "+user.getEmail());
 	}
 
 }

@@ -16,27 +16,34 @@
 	<p>Hello This is Login Page</p>
 
 
-	<%-- <form method = "post" action="/postLogin.html" cssClass="form-signin">
-  			<fieldset>
-  			<h2 class="form-signup-heading">Signin</h2>
-  			<label for = "userNameInput">UserName</label>
-  			<input name = "userName" cssClass="form-control" placeholder = "userName">
-  			
-  			<label for = "password">Password</label>
-  			<input name = "password" cssClass="form-control" placeholder = "password">
-  			<button name="Button" type = "button">Sing in</button>
-  			</fieldset>
-  			</form> --%>
+	
 
-	<form action='<spring:url value="/login"/>' method="post">
-
+	 <form action='<spring:url value="/login"/>' method="post"> 
+	 
+	 
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputUserName" class="sr-only">userName</label>
+        <input type="text" name="userName" id="inputUserName" class="form-control" placeholder="userName" >
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      
+	<%-- <%-- <form action="/loginpage.html" method="post"> --%>
+	
+	
+<!-- 
 		<h1>SIGN IN PAGE</h1>
 
 
 
-		<input type="text" name="userName" placeholder="User Name"><br>
+		<input type="text" name="userName" placeholder="UserName"><br>
 		<input type="password" name="password" placeholder="Password"><br>
-		<input type="submit" tabindex="5" value="Sign In">
+		<input type="submit" tabindex="5" class="btn btn-lg btn-primary btn-block" value="Sign In"> --%> -->
 	</form>
 </body>
 </html>
