@@ -30,5 +30,6 @@ public interface UserService {
 	public void saveFreelancerInProject(Project project, Freelancer freelancer);
 
 	public Employer findEmployerByUserName(String username);
+	public Freelancer findFreelancerByUserName(String username);
 
 }

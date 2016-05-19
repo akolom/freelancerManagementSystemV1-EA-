@@ -27,26 +27,29 @@
 			<a class="navbar-brand"
 				href="<spring:url value="/projects/all.html"/>">NEON</a>
 		</div>
-		
+
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 
 				<li class="active"><a href="#">Projects</a></li>
-				<li><a href="<spring:url value="/freelancer/profile.html?id=5"/>">Profile</a></li>
-				<li ><a href="<spring:url value="/projects/freelancer_project.html"/>">Applied Projects</a></li>
+				<li><a
+					href="<spring:url value="/freelancer/profile.html?id=5"/>">Profile</a></li>
+				<li><a
+					href="<spring:url value="/projects/freelancer_project.html"/>">Applied
+						Projects</a></li>
 			</ul>
 		</div>
 		<!--/.nav-collapse -->
 	</div>
 	</nav>
-<br>
-<br>
-<br>
-<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<span id="a"></span>
 	<div class="row">
 		<div class="col-lg-1"></div>
-		<div class="col-lg-3" >
+		<div class="col-lg-3">
 			<div class="row">
 				<form:form commandName="projectSearch" method="post"
 					action='/FreelanceManagementSystem/projects/filterSearch.html'>
@@ -59,6 +62,7 @@
 					<form:select path="skills" items="${skill}"
 						itemLabel="skillTitle.text" itemValue="id" multiple="true"
 						cssClass="selectpicker">
+						
 					</form:select>
 					<br>
 					<br>
@@ -114,29 +118,24 @@
 						<div class="col-lg-4">
 
 
-							<a href='<spring:url value="/projects/applyProject.html?id=${project.id}"/>' 
-								class="btn btn-primary">  Apply  </a>  
+							<a
+								href='<spring:url value="/projects/applyProject.html?id=${project.id}"/>'
+								class="btn btn-primary"> Apply </a>
 
-<<<<<<< HEAD
-	<div class="container">
-		<h1>Welcome Neons</h1>
-		<h1>Succefully Authenticate Congratulation</h1>
-=======
-							<br>&#36; ${project.budget}<br>
 
+								<br>&#36; ${project.budget}<br>
 
 						</div>
-					</div>
-					<hr>
+						</div>
+						<hr>
 				</c:forEach>
 
 			</c:if>
 
 		</div>
 		<div class="col-lg-2"></div>
->>>>>>> origin/sabeen
 	</div>
 
-				<%@ include file="/WEB-INF/import/footer.jsp"%>
+	<%@ include file="/WEB-INF/import/footer.jsp"%>
 </body>
 </html>

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 public class Address implements Serializable {
 
@@ -29,7 +31,7 @@ public class Address implements Serializable {
 
 
 
-	@Size(min=2,max=2,message="{Size.state}")
+	@Size(min=2, max=2,message="{Size.state}")
 	private String state;
 
 	@NotEmpty(message="{NotEmpty}")

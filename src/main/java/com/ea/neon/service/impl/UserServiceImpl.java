@@ -151,4 +151,19 @@ public class UserServiceImpl implements UserService {
 		return employer;
 	}
 
+	@Override
+	public Freelancer findFreelancerByUserName(String username) {
+		Freelancer freelancer = (Freelancer) userRepository.findOneByCredentialsUserName(username);
+		freelancer.setAddresses(addressRepository.findAllByUser(freelancer));
+		freelancer.getCredentials();
+		freelancer.getProfile();
+		freelancer.setEducations(educationRepository.findByFreelancer(freelancer.getId()));
+		freelancer.setCertifications(certificationsRepository.findByFreelancer(freelancer.getId()));
+		freelancer.setProjects(projectRepository.findByFreelancer(freelancer.getId()));
+		freelancer.setSkills(skillsRepository.findByFreelancer(freelancer.getId()));
+		freelancer.setExperiances(experienceRepository.findByFreelancer(freelancer.getId()));
+
+		return freelancer;
+	}
+
 }

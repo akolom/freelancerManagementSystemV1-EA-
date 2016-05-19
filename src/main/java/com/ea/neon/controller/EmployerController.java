@@ -63,35 +63,17 @@ public class EmployerController {
 	}
 
 	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
-	public String addProject(@Valid @ModelAttribute("newProject") Project project, BindingResult result) {
-		if(result.hasErrors()){
-			return "redirect:/employer/profile.html?id=3";
-		}
-		System.out.println(project.getName());
-		System.out.println(project.getDescription());
-		System.out.println(project.getBudget());
-		System.out.println(project.getCategory().getCategoryTitle());
-		System.out.println(project.getCategory().getSkills().toString());
-		// dummy user with id = 4
-		project.setEmployer(userService.findEmployerById(3));
-		/*
-		 * Status status = new Status();
-		 * status.setProjectStatus(ProjectStatus.PENDING);
-		 * project.setStatus(status);
-		 */
-
-		return "employerProfile";
-	}
-
-	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
-	public String addProject(@ModelAttribute("newProject") Project project, Principal principal) {
+	public String addProject(@Valid @ModelAttribute("newProject") Project project, BindingResult result, Principal principal) {
+		
 		String username = principal.getName();
 		project.setEmployer(userService.findEmployerByUserName(username));
-
+		if(result.hasErrors()){
+			return "redirect:/employer/profile.html";
+		}
 		projectService.saveProject(project);
 		return "redirect:/employer/profile.html";
-	}
 
+	}
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(Category.class, new CategoryEditor(categoryService));

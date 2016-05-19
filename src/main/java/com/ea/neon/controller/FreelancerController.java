@@ -1,5 +1,7 @@
 package com.ea.neon.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +25,10 @@ public class FreelancerController {
 	
 
 	@RequestMapping(value = "/profile")
-	public String viewProfile(@RequestParam("id") Integer id, Model model) {
-		Freelancer freelancer = userService.findFreelancerById(id);
-//		List<Project> projects = projectService.findAllByEmployer(employer);
-//		employer.setProject(projects);
-		model.addAttribute("listProject", projectService.findAllAppliedProjects(19));
+	public String viewProfile(Model model,Principal principal) {
+
+		Freelancer freelancer = userService.findFreelancerByUserName(principal.getName());
+		model.addAttribute("listProject", projectService.findAllAppliedProjects(freelancer.getId()));
 		model.addAttribute("currentUser", freelancer);
 		return "freelancer_profile";
 	}

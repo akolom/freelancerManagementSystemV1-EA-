@@ -26,9 +26,9 @@
 			<div id="navbar">
 				<ul class="nav navbar-nav">
 					<security:authorize access="hasRole('ROLE_FL')">
-						<li><a href="#">Projects</a></li>
+						<li><a href="<spring:url value="/projects/all.html"/>">Projects</a></li>
 						<li><a
-							href="<spring:url value="/freelancer/profile.html?id=5"/>">Profile</a></li>
+							href="<spring:url value="/freelancer/profile.html"/>">Profile</a></li>
 						<li><a
 							href="<spring:url value="/projects/freelancer_project.html"/>">Applied
 								Projects</a></li>

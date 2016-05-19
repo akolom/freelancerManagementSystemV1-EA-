@@ -26,7 +26,6 @@ import com.ea.neon.domain.Status.ProjectStatus;
 import com.ea.neon.domain.User;
 import com.ea.neon.repository.AuthorityRepository;
 import com.ea.neon.repository.CategoryRepository;
-import com.ea.neon.repository.FreelancerRepository;
 import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.repository.SkillsRepository;
 import com.ea.neon.repository.StatusRepository;
@@ -113,6 +112,7 @@ public class InitServiceImpl {
 		employer.setEmail("employer@gmail.com");
 		employer.setProfile(profile);
 		employer.setCredentials(credentials);
+		employer.setContact("9898989889");
 
 		userRepo.save(employer);
 
@@ -120,6 +120,7 @@ public class InitServiceImpl {
 		user.setFirstName("steve");
 		user.setFirstName("jobs");
 		user.setEmail("jobs@gmail.com");
+		user.setContact("9898989898");
 		user.setCredentials(credentials3);
 
 		userRepo.save(user);
@@ -177,6 +178,7 @@ public class InitServiceImpl {
 		freelancer.setLastName("freelancer");
 		freelancer.setEmail("ksav.sai52@gmail.com");
 		freelancer.setCredentials(credentials1);
+		freelancer.setContact("98989898988");
 
 		userRepo.save(freelancer);
 
