@@ -24,6 +24,7 @@ import com.ea.neon.domain.Skills;
 import com.ea.neon.domain.Skills.SkillTitle;
 import com.ea.neon.dto.ProjectApplyDTO;
 import com.ea.neon.dto.ProjectSearchDTO;
+import com.ea.neon.repository.EmployerRepository;
 import com.ea.neon.repository.ProjectRepository;
 import com.ea.neon.sender.MessageSender;
 import com.ea.neon.service.CategoryService;
@@ -48,6 +49,9 @@ public class ProjectController {
 	UserService userService;
 	@Autowired
 	ProjectRepository projectRepository;
+	
+	@Autowired
+	EmployerRepository employerRepository;
 	
 	@ModelAttribute("userStory")
 	public Project getProject() {

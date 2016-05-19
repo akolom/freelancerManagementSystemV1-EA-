@@ -74,6 +74,17 @@
 							${project.status.projectStatus.text}</span>&nbsp;&nbsp;
 
 					</h4>
+					
+
+				</div>
+				
+				
+				<div class="col-lg-1">
+
+					<h4>
+						<a href='<spring:url value="/employer/profile.html?id="+${project.employer.id} />'>	${project.employer.firstname}</a>
+					</h4>
+					
 
 				</div>
 

@@ -59,9 +59,11 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Project> findAllAppliedProjects(Integer freelancerId) {
 		List<Integer> projectId = projectRepository.findAllProjectIdByFreelancer(freelancerId);
 		List<Project> projects = new ArrayList<>();
-
+		
 		for (Integer pId : projectId) {
+			
 			projects.add(projectRepository.findById(pId));
+			
 		}
 		return projects;
 	}
