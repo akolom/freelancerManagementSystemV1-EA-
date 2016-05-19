@@ -24,4 +24,9 @@ public interface UserService {
 	public Employer findEmployerById(Integer id);
 
 	public void removeProjectFromFreelancer(Freelancer f, Project project);
+
+	public Freelancer findFreelancerById(Integer id);
+
+	public void saveFreelancerInProject(Project project, Freelancer freelancer);
+
 }

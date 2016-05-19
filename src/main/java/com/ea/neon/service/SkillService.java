@@ -11,6 +11,6 @@ public interface SkillService {
 
 	public Skills getSkillById(Integer id);
 
-	public Skills getSkillBySkillTitle(SkillTitle skillTitle);
+	public Skills getSkillBySkillTitle(SkillTitle valueOf);
 	
 }

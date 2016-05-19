@@ -11,13 +11,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<context:property-placeholder location="classpath:application.properties" />
-
-	<bean
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-		id="messageSource">
-		<property value="classpath:messages" name="basename" />
-		<property value="UTF-8" name="defaultEncoding" />
-	</bean>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
@@ -93,6 +87,24 @@
 		entity-manager-factory-ref="entityManagerFactory"
 		transaction-manager-ref="transactionManager" />
 
+	<import resource="classpath:context/jms-sender-app-context.xml" />
+
+	<import resource="classpath:context/jms-listener-app-context.xml" />
+
 	<import resource="classpath:context/security.xml" />
 
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:errorMessages" />
+	</bean>
+
+	<bean id="messageAccessor"
+		class="org.springframework.context.support.MessageSourceAccessor">
+		<constructor-arg ref="messageSource" />
+	</bean>
+
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
 </beans>

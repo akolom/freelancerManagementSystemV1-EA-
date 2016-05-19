@@ -1,45 +1,56 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
- 
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <title>Welcome</title>
 </head>
 <body>
-	<section>
-		<div class="jumbotron">
-			<div class="container">
-				<h1> ${greeting} </h1>
-				<p> ${tagline} </p>
-  					Welcome  ${member.firstName} !
- 
-			</div>	 
- 
-				  <div class="container">
-					<c:choose>
-					    <c:when test="${empty member}">
-      					<a href="<spring:url value='/login' />" class="btn btn-default pull-right"> Login</a>
-					    </c:when>
-					    <c:otherwise>
-		 					<a href="<spring:url value="/members/add" />" class="btn btn-default pull-right">Add Member</a>	
-		 					<a href="<spring:url value="/members" />" class="btn btn-default pull-right">Member List</a>	
-		 					<br>
-		 					<a href="<spring:url value="/products/add" />" class="btn btn-default pull-right">Add Product</a>	
-		 					<a href="<spring:url value="/products/all" />" class="btn btn-default pull-right">Product List</a>	
-		 					<br>
-		 					<a href="<spring:url value='/logout' />" class="btn btn-default pull-right"> Logout</a>
-		 
- 					    </c:otherwise>
-					</c:choose>	
- 					 <a href="<spring:url value='/members' />" class="btn btn-default">
-						<span class="glyphicon-hand-left glyphicon"></span> Go to Community
-					</a>
-				</div>	
-	 			<div class="pull-left"> <h3>${SpecialBlurb}</h3> </div>
-		</div>	
-	</section>
-	
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">NEON</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<form class="navbar-form navbar-right">
+					<div class="form-group">
+						<input type="text" placeholder="Email" class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="password" placeholder="Password" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-success">Sign in</button>
+				</form>
+			</div>
+			<!--/.navbar-collapse -->
+		</div>
+	</nav>
+
+	<!-- Main jumbotron for a primary marketing message or call to action -->
+	<div class="jumbotron">
+		<div class="container">
+			<h1>NEON</h1>
+			<p>A Freelance Management System (FMS) is a web-based workforce
+				solution that helps businesses manage their independent contractor
+				and freelancer workforces. FMS, empowers businesses of all sizes to
+				manage the end-to-end freelance workstream, all from one centralized
+				dashboard.</p>
+			<p>
+				<a class="btn btn-primary btn-lg" href="#" role="button">Learn
+					more &raquo;</a>
+			</p>
+		</div>
+	</div>
+
 </body>
 </html>

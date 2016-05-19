@@ -52,6 +52,14 @@ public class Project implements Serializable {
 			@JoinColumn(name = "skill_id") })
 	private List<Skills> skills;
 
+	public List<Skills> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skills> skills) {
+		this.skills = skills;
+	}
+
 	public Status getStatus() {
 		return status;
 	}
@@ -114,14 +122,6 @@ public class Project implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<Skills> getSkills() {
-		return skills;
-	}
-
-	public void setSkills(List<Skills> skills) {
-		this.skills = skills;
 	}
 
 }

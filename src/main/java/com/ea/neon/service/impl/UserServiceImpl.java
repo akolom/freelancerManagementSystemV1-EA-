@@ -1,5 +1,6 @@
 package com.ea.neon.service.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,9 +14,13 @@ import com.ea.neon.domain.Freelancer;
 import com.ea.neon.domain.Project;
 import com.ea.neon.domain.User;
 import com.ea.neon.repository.AddressRepository;
+import com.ea.neon.repository.CertificationsRepository;
+import com.ea.neon.repository.EducationRepository;
 import com.ea.neon.repository.EmployerRepository;
+import com.ea.neon.repository.ExperienceRepository;
 import com.ea.neon.repository.FreelancerRepository;
 import com.ea.neon.repository.ProjectRepository;
+import com.ea.neon.repository.SkillsRepository;
 import com.ea.neon.repository.UserRepository;
 import com.ea.neon.service.UserService;
 
@@ -30,13 +35,25 @@ public class UserServiceImpl implements UserService {
 	private EmployerRepository employerRepository;
 
 	@Autowired
+	private EducationRepository educationRepository;
+
+	@Autowired
 	private AddressRepository addressRepository;
 
 	@Autowired
 	private FreelancerRepository freelancerRepository;
 
 	@Autowired
+	private CertificationsRepository certificationsRepository;
+
+	@Autowired
+	private SkillsRepository skillsRepository;
+
+	@Autowired
 	private ProjectRepository projectRepository;
+
+	@Autowired
+	private ExperienceRepository experienceRepository;
 
 	public void save(User user) {
 		userRepository.save(user);
@@ -51,9 +68,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User update(User user) {
-		
-		//userRepository.update(user);
-	
+
+		// userRepository.update(user);
+
 		try {
 			return userRepository.save(user);
 		} catch (StaleObjectStateException e) {
@@ -61,9 +78,20 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}
 	}
+
 	@Override
 	public User findOneByUsername(String userName) {
 		return userRepository.findOneByCredentialsUserName(userName);
+	}
+
+	public void saveFreelancerInProject(Project project, Freelancer freelancer) {
+		List<Project> projects = freelancer.getProjects();
+		if (projects == null) {
+			projects = new ArrayList<>();
+		}
+		projects.add(project);
+		freelancer.setProjects(projects);
+		userRepository.save(freelancer);
 	}
 
 	@Override
@@ -82,6 +110,22 @@ public class UserServiceImpl implements UserService {
 		employer.getCredentials();
 		employer.getProfile();
 		return employer;
+	}
+
+	@Override
+	public Freelancer findFreelancerById(Integer id) {
+
+		Freelancer freelancer = freelancerRepository.findOne(id);
+		freelancer.setAddresses(addressRepository.findAllByUser(freelancer));
+		freelancer.getCredentials();
+		freelancer.getProfile();
+		freelancer.setEducations(educationRepository.findByFreelancer(freelancer.getId()));
+		freelancer.setCertifications(certificationsRepository.findByFreelancer(freelancer.getId()));
+		freelancer.setProjects(projectRepository.findByFreelancer(freelancer.getId()));
+		freelancer.setSkills(skillsRepository.findByFreelancer(freelancer.getId()));
+		freelancer.setExperiances(experienceRepository.findByFreelancer(freelancer.getId()));
+
+		return freelancer;
 	}
 
 	@Override
