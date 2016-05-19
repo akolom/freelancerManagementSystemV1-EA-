@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @Entity
 @DiscriminatorValue(value = "employeer")
 public class Employer extends User implements Serializable {
