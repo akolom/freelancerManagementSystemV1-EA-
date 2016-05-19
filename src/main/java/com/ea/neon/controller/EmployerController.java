@@ -1,6 +1,7 @@
 package com.ea.neon.controller;
 
 import java.beans.PropertyEditorSupport;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ea.neon.domain.Category;
 import com.ea.neon.domain.Employer;
@@ -47,8 +47,9 @@ public class EmployerController {
 	}
 
 	@RequestMapping(value = "/profile")
-	public String viewProfile(@RequestParam("id") Integer id, Model model) {
-		Employer employer = userService.findEmployerById(id);
+	public String viewProfile(Model model, Principal principal) {
+		String username = principal.getName();
+		Employer employer = userService.findEmployerByUserName(username);
 		List<Project> projects = projectService.findAllByEmployer(employer);
 		employer.setProject(projects);
 		model.addAttribute("currentUser", employer);

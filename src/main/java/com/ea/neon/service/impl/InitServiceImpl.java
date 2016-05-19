@@ -80,17 +80,31 @@ public class InitServiceImpl {
 
 		authorityRepository.save(authority1);
 
+		Authority authority2 = new Authority();
+		authority2.setName("Freelancer");
+		authority2.setRole("ROLE_FL");
+
+		authorityRepository.save(authority2);
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		Credentials credentials = new Credentials();
 		credentials.setUserName("employer");
 		credentials.setPassword(encoder.encode("employer"));
 		credentials.setAuthority(authority);
+		credentials.setEnabled(true);
 
 		Credentials credentials1 = new Credentials();
 		credentials1.setUserName("admin");
 		credentials1.setPassword(encoder.encode("admin"));
 		credentials1.setAuthority(authority1);
+		credentials1.setEnabled(true);
+
+		Credentials credentials3 = new Credentials();
+		credentials3.setUserName("freelancer");
+		credentials3.setPassword(encoder.encode("freelancer"));
+		credentials3.setAuthority(authority2);
+		credentials3.setEnabled(true);
 
 		User employer = new Employer();
 		employer.setFirstName("employer");
@@ -105,6 +119,7 @@ public class InitServiceImpl {
 		user.setFirstName("steve");
 		user.setFirstName("jobs");
 		user.setEmail("jobs@gmail.com");
+		user.setCredentials(credentials3);
 
 		userRepo.save(user);
 

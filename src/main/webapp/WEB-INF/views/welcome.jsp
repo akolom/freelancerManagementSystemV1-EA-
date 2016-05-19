@@ -1,5 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<%@ include file="/WEB-INF/import/taglib.jsp"%>
 
 <html>
 <head>
@@ -9,7 +11,7 @@
 <title>Welcome</title>
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -19,18 +21,41 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">NEON</a>
+				<a class="navbar-brand" href='<spring:url value="/"/>'>NEON</a>
 			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<form class="navbar-form navbar-right">
-					<div class="form-group">
-						<input type="text" placeholder="Email" class="form-control">
-					</div>
-					<div class="form-group">
-						<input type="password" placeholder="Password" class="form-control">
-					</div>
-					<button type="submit" class="btn btn-success">Sign in</button>
-				</form>
+			<div id="navbar">
+				<ul class="nav navbar-nav">
+					<security:authorize access="hasRole('ROLE_FL')">
+						<li><a href="#">Projects</a></li>
+						<li><a
+							href="<spring:url value="/freelancer/profile.html?id=5"/>">Profile</a></li>
+						<li><a
+							href="<spring:url value="/projects/freelancer_project.html"/>">Applied
+								Projects</a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('ROLE_EMP')">
+						<li><a href='<spring:url value="/employer/profile.html"/>'>Profile</a></li>
+					</security:authorize>
+				</ul>
+				<security:authorize access="isAnonymous()">
+					<form class="navbar-form pull-right"
+						action='<spring:url value="/login"/>' method="post">
+						<div class="form-group">
+							<input name="userName" type="text" placeholder="Username"
+								class="form-control">
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" placeholder="Password"
+								class="form-control">
+						</div>
+						<button type="submit" class="btn btn-success">Sign in</button>
+					</form>
+				</security:authorize>
+				<security:authorize access="isAuthenticated()">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href='<spring:url value="/logout"/>'>Log Out</a></li>
+					</ul>
+				</security:authorize>
 			</div>
 			<!--/.navbar-collapse -->
 		</div>

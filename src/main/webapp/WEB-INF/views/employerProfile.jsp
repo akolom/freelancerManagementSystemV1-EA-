@@ -12,6 +12,56 @@
 </head>
 <body>
 
+	<nav class="navbar navbar-inverse">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+				aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href='<spring:url value="/"/>'>NEON</a>
+		</div>
+		<div id="navbar">
+			<ul class="nav navbar-nav">
+				<security:authorize access="hasRole('ROLE_FL')">
+					<li><a href="#">Projects</a></li>
+					<li><a
+						href="<spring:url value="/freelancer/profile.html?id=5"/>">Profile</a></li>
+					<li><a
+						href="<spring:url value="/projects/freelancer_project.html"/>">Applied
+							Projects</a></li>
+				</security:authorize>
+				<security:authorize access="hasRole('ROLE_EMP')">
+					<li class="active"><a href='<spring:url value="/employer/profile.html"/>'>Profile</a></li>
+				</security:authorize>
+			</ul>
+			<security:authorize access="isAnonymous()">
+				<form class="navbar-form navbar-right"
+					action='<spring:url value="/login"/>' method="post">
+					<div class="form-group">
+						<input name="userName" type="text" placeholder="Username"
+							class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="password" name="password" placeholder="Password"
+							class="form-control">
+					</div>
+					<button type="submit" class="btn btn-success">Sign in</button>
+				</form>
+			</security:authorize>
+			<security:authorize access="hasRole('ROLE_ADMIN')">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href='<spring:url value="/logout"/>'></a></li>
+				</ul>
+			</security:authorize>
+		</div>
+		<!--/.navbar-collapse -->
+	</div>
+	</nav>
+
 	<div class="container">
 		<div class="row">
 			<h1>Personal Information</h1>
@@ -161,7 +211,7 @@
 											<div class="row">
 												<div class="col-md-3">Skills</div>
 												<div class="col-md-9 text-center">
-												<c:forEach items="${project.skills }" var="skill">
+													<c:forEach items="${project.skills }" var="skill">
 													${skill.skillTitle.text}
 													&nbsp;&nbsp;
 												</c:forEach>
@@ -224,128 +274,182 @@
 					<h4 class="modal-title" id="myModalLabel">Edit Project</h4>
 				</div>
 				<div class="modal-body">
-				<form:form commandName="newProject" method="post"
-							action="/FreelanceManagementSystem/employer/addProject.html"
-							cssClass="form-horizontal">
-							<input type="hidden" id="id" name="id" class="hidden-id">
-							<div class="form-group">
-								<label for="name" class="col-sm-2 control-label">Project
-									Name</label>
-								<div class="col-sm-10">
-									<form:input path="name" cssClass="form-control edit-name"
-										placeholder="Project1" />
-								</div>
+					<form:form commandName="newProject" method="post"
+						action="/FreelanceManagementSystem/employer/addProject.html"
+						cssClass="form-horizontal">
+						<input type="hidden" id="id" name="id" class="hidden-id">
+						<div class="form-group">
+							<label for="name" class="col-sm-2 control-label">Project
+								Name</label>
+							<div class="col-sm-10">
+								<form:input path="name" cssClass="form-control edit-name"
+									placeholder="Project1" />
 							</div>
-							<div class="form-group">
-								<label for="description" class="col-sm-2 control-label">Project
-									Description</label>
-								<div class="col-sm-10">
-									<form:textarea path="description" cssClass="form-control edit-description"
-										placeholder="This project deals with ...." />
-								</div>
+						</div>
+						<div class="form-group">
+							<label for="description" class="col-sm-2 control-label">Project
+								Description</label>
+							<div class="col-sm-10">
+								<form:textarea path="description"
+									cssClass="form-control edit-description"
+									placeholder="This project deals with ...." />
 							</div>
-							<div class="form-group">
-								<label for="budget" class="col-sm-2 control-label">Project
-									Budget</label>
-								<div class="col-sm-10">
-									<form:input path="budget" cssClass="form-control edit-budget"
-										placeholder="100.00 $" />
-								</div>
+						</div>
+						<div class="form-group">
+							<label for="budget" class="col-sm-2 control-label">Project
+								Budget</label>
+							<div class="col-sm-10">
+								<form:input path="budget" cssClass="form-control edit-budget"
+									placeholder="100.00 $" />
 							</div>
-							<div class="form-group">
-								<label for="category" class="col-sm-2 control-label">Project
-									Category</label>
-								<div class="col-sm-10">
-									<form:select cssClass="selectpicker edit-category" path="category"
-										items="${categories }" itemLabel="categoryTitle.text"
-										itemValue="id" />
-								</div>
+						</div>
+						<div class="form-group">
+							<label for="category" class="col-sm-2 control-label">Project
+								Category</label>
+							<div class="col-sm-10">
+								<form:select cssClass="selectpicker edit-category"
+									path="category" items="${categories }"
+									itemLabel="categoryTitle.text" itemValue="id" />
 							</div>
-							<div class="form-group">
-								<label for="skills" class="col-sm-2 control-label">Project
-									Skills</label>
-								<div class="col-sm-10">
-									<form:select class="edit-skills" path="skills" multiple="true"></form:select>
-									<%-- <form:select cssClass="selectpicker" path="category"
+						</div>
+						<div class="form-group">
+							<label for="skills" class="col-sm-2 control-label">Project
+								Skills</label>
+							<div class="col-sm-10">
+								<form:select class="edit-skills" path="skills" multiple="true"></form:select>
+								<%-- <form:select cssClass="selectpicker" path="category"
 										items="${categories }" itemLabel="categoryTitle"
 										itemValue="id" /> --%>
-								</div>
 							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-10">
-									<button type="submit" class="btn btn-default">Update
-										Project</button>
-								</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-default">Update
+									Project</button>
 							</div>
-						</form:form>
+						</div>
+					</form:form>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#myTabs a').click(function(e) {
-				e.preventDefault()
-				$(this).tab('show')
-			});
-			$("#category").on("change", function() {
-				$('#skills').children().remove();
-				$.ajax({
-					"url" : '<spring:url value="/rest/getSkills/"/>' + $(this).val(),
-					"type" : "GET",
-					"dataType" : "json",
-					"success" : successFunction,
-					"error" : failureFunction
-				});
-				function successFunction(json) {
-					$.each(json, function(i, value) {
-				           $('#skills').append($('<option>').text(value.skillTitle).attr('value', value.id));
-				    });
-				}
-				function failureFunction(data) {
-					alert("error");
-				}
-			});
-			$(".editProjectTrigger").click(function() {
-				var status_id = $(this).val();
-				$(".hidden-id").val(status_id);
-				$.ajax({
-					"url" : '<spring:url value="/rest/getProject/"/>' + status_id,
-					"type" : "GET",
-					"dataType" : "json",
-					"success" : successEditFunction,
-					"error" : failureEditFunction
-				});
-				function successEditFunction(json) {
-					$(".edit-name").val(json.name);
-					$(".edit-description").val(json.description);
-					$(".edit-budget").val(json.budget);
-				}
-				function failureEditFunction(data) {
-					alert("error");
-				}
-				$("#editProject").modal("show");
-			});
-			$(".edit-category").on("change", function() {
-				$('.edit-skills').children().remove();
-				$.ajax({
-					"url" : '<spring:url value="/rest/getSkills/"/>' + $(this).val(),
-					"type" : "GET",
-					"dataType" : "json",
-					"success" : successEditCategoryFunction,
-					"error" : failureEditCategoryFunction
-				});
-				function successEditCategoryFunction(json) {
-					$.each(json, function(i, value) {
-				           $('.edit-skills').append($('<option>').text(value.skillTitle).attr('value', value.id));
-				    });
-				}
-				function failureEditCategoryFunction(data) {
-					alert("error");
-				}
-			});
-		});
+		$(document)
+				.ready(
+						function() {
+							$('#myTabs a').click(function(e) {
+								e.preventDefault()
+								$(this).tab('show')
+							});
+							$("#category")
+									.on(
+											"change",
+											function() {
+												$('#skills').children()
+														.remove();
+												$
+														.ajax({
+															"url" : '<spring:url value="/rest/getSkills/"/>'
+																	+ $(this)
+																			.val(),
+															"type" : "GET",
+															"dataType" : "json",
+															"success" : successFunction,
+															"error" : failureFunction
+														});
+												function successFunction(json) {
+													$
+															.each(
+																	json,
+																	function(i,
+																			value) {
+																		$(
+																				'#skills')
+																				.append(
+																						$(
+																								'<option>')
+																								.text(
+																										value.skillTitle)
+																								.attr(
+																										'value',
+																										value.id));
+																	});
+												}
+												function failureFunction(data) {
+													alert("error");
+												}
+											});
+							$(".editProjectTrigger")
+									.click(
+											function() {
+												var status_id = $(this).val();
+												$(".hidden-id").val(status_id);
+												$
+														.ajax({
+															"url" : '<spring:url value="/rest/getProject/"/>'
+																	+ status_id,
+															"type" : "GET",
+															"dataType" : "json",
+															"success" : successEditFunction,
+															"error" : failureEditFunction
+														});
+												function successEditFunction(
+														json) {
+													$(".edit-name").val(
+															json.name);
+													$(".edit-description").val(
+															json.description);
+													$(".edit-budget").val(
+															json.budget);
+												}
+												function failureEditFunction(
+														data) {
+													alert("error");
+												}
+												$("#editProject").modal("show");
+											});
+							$(".edit-category")
+									.on(
+											"change",
+											function() {
+												$('.edit-skills').children()
+														.remove();
+												$
+														.ajax({
+															"url" : '<spring:url value="/rest/getSkills/"/>'
+																	+ $(this)
+																			.val(),
+															"type" : "GET",
+															"dataType" : "json",
+															"success" : successEditCategoryFunction,
+															"error" : failureEditCategoryFunction
+														});
+												function successEditCategoryFunction(
+														json) {
+													$
+															.each(
+																	json,
+																	function(i,
+																			value) {
+																		$(
+																				'.edit-skills')
+																				.append(
+																						$(
+																								'<option>')
+																								.text(
+																										value.skillTitle)
+																								.attr(
+																										'value',
+																										value.id));
+																	});
+												}
+												function failureEditCategoryFunction(
+														data) {
+													alert("error");
+												}
+											});
+						});
 	</script>
 
 </body>

@@ -140,4 +140,13 @@ public class UserServiceImpl implements UserService {
 		freelancerRepository.save(freelancer);
 	}
 
+	@Override
+	public Employer findEmployerByUserName(String username) {
+		Employer employer = (Employer) userRepository.findOneByCredentialsUserName(username);
+		employer.setAddresses(addressRepository.findAllByUser(employer));
+		employer.getCredentials();
+		employer.getProfile();
+		return employer;
+	}
+
 }
