@@ -54,7 +54,7 @@ public class EmailController {
 		} catch (MessagingException e) {
 			model.addAttribute("error", true);
 		}
-		return "redirect:/employer/profile.html?id=3";
+		return "redirect:/employer/profile.html";
 	}
 
 	@RequestMapping("/forHiring")
@@ -75,7 +75,7 @@ public class EmailController {
 		} catch (MessagingException e) {
 			model.addAttribute("error", true);
 		}
-		return "redirect:/employer/profile.html?id=3";
+		return "redirect:/employer/profile.html";
 	}
 
 }

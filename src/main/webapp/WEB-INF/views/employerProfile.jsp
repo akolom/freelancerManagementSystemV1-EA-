@@ -52,9 +52,9 @@
 					<button type="submit" class="btn btn-success">Sign in</button>
 				</form>
 			</security:authorize>
-			<security:authorize access="hasRole('ROLE_ADMIN')">
+			<security:authorize access="isAuthenticated()">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href='<spring:url value="/logout"/>'></a></li>
+					<li><a href='<spring:url value="/logout"/>'>Log Out</a></li>
 				</ul>
 			</security:authorize>
 		</div>

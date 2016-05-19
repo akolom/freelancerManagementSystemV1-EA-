@@ -59,10 +59,11 @@ public class EmployerController {
 	}
 
 	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
-	public String addProject(@ModelAttribute("newProject") Project project) {
-		project.setEmployer(userService.findEmployerById(3));
+	public String addProject(@ModelAttribute("newProject") Project project, Principal principal) {
+		String username = principal.getName();
+		project.setEmployer(userService.findEmployerByUserName(username));
 		projectService.saveProject(project);
-		return "redirect:/employer/profile.html?id=3";
+		return "redirect:/employer/profile.html";
 	}
 
 	@InitBinder
