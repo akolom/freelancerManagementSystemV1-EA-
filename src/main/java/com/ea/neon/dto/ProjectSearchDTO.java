@@ -3,9 +3,7 @@ package com.ea.neon.dto;
 import java.util.List;
 
 import com.ea.neon.domain.Category;
-import com.ea.neon.domain.Category.CategoryTitle;
 import com.ea.neon.domain.Skills;
-import com.ea.neon.domain.Skills.SkillTitle;
 
 public class ProjectSearchDTO {
 

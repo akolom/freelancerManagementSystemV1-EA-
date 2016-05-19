@@ -49,7 +49,7 @@ public class EmployerController {
 	@RequestMapping(value = "/profile")
 	public String viewProfile(Model model, Principal principal) {
 		String username = principal.getName();
-		Employer employer = userService.findEmployerByUserName(username);
+		Employer employer = (Employer) userService.findOneByUsername(username);
 		List<Project> projects = projectService.findAllByEmployer(employer);
 		employer.setProject(projects);
 		model.addAttribute("currentUser", employer);
@@ -61,7 +61,7 @@ public class EmployerController {
 	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
 	public String addProject(@ModelAttribute("newProject") Project project, Principal principal) {
 		String username = principal.getName();
-		project.setEmployer(userService.findEmployerByUserName(username));
+		project.setEmployer((Employer) userService.findOneByUsername(username));
 		projectService.saveProject(project);
 		return "redirect:/employer/profile.html";
 	}

@@ -13,8 +13,7 @@
 			access="hasRole('ROLE_FL')" />
 		<security:form-login login-page="/"
 			username-parameter="userName" password-parameter="password"
-			authentication-success-forward-url="/"
-			authentication-failure-forward-url="/errorpage.html" />
+			authentication-success-forward-url="/" />
 		<security:logout logout-url="/logout"
 			logout-success-url="/" />
 		<security:csrf disabled="true" />

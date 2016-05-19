@@ -38,7 +38,7 @@
 					</security:authorize>
 				</ul>
 				<security:authorize access="isAnonymous()">
-					<form class="navbar-form pull-right"
+					<form class="navbar-form navbar-right"
 						action='<spring:url value="/login"/>' method="post">
 						<div class="form-group">
 							<input name="userName" type="text" placeholder="Username"
@@ -49,6 +49,9 @@
 								class="form-control">
 						</div>
 						<button type="submit" class="btn btn-success">Sign in</button>
+						
+						<a href='<spring:url value="/signup.html"/>' class="btn btn-info">Sign
+							Up</a>
 					</form>
 				</security:authorize>
 				<security:authorize access="isAuthenticated()">

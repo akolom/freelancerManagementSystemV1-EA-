@@ -6,4 +6,6 @@ import com.ea.neon.domain.Authority;
 
 public interface AuthorityRepository extends JpaRepository<Authority, Integer> {
 
+	Authority findOneByName(String name);
+
 }

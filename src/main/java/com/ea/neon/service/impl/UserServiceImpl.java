@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.StaleObjectStateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,7 +57,32 @@ public class UserServiceImpl implements UserService {
 	private ExperienceRepository experienceRepository;
 
 	public void save(User user) {
-		userRepository.save(user);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		user.getCredentials().setEnabled(true);
+		user.getCredentials().setPassword(encoder.encode(user.getCredentials().getPassword()));
+		String authorityName = user.getCredentials().getAuthority().getName();
+		switch (authorityName) {
+		case "Employer":
+			User employer = new Employer();
+			employer.setFirstName(user.getFirstName());
+			employer.setLastName(user.getLastName());
+			employer.setEmail(user.getEmail());
+			employer.setCredentials(user.getCredentials());
+			userRepository.save(employer);
+			break;
+		case "Freelancer":
+			User freelancer = new Freelancer();
+			freelancer.setFirstName(user.getFirstName());
+			freelancer.setLastName(user.getLastName());
+			freelancer.setEmail(user.getEmail());
+			freelancer.setCredentials(user.getCredentials());
+			userRepository.save(freelancer);
+			break;
+		default:
+			userRepository.save(user);
+			break;
+		}
 	}
 
 	public List<User> findAll() {
@@ -68,9 +94,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User update(User user) {
-
-		// userRepository.update(user);
-
 		try {
 			return userRepository.save(user);
 		} catch (StaleObjectStateException e) {
@@ -141,8 +164,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Employer findEmployerByUserName(String username) {
-		Employer employer = (Employer) userRepository.findOneByCredentialsUserName(username);
+	public Employer findEmployerByName(String username) {
+		Employer employer = employerRepository.findOneByFirstName(username);
+		System.out.println(employer.getFirstName());
 		employer.setAddresses(addressRepository.findAllByUser(employer));
 		employer.getCredentials();
 		employer.getProfile();

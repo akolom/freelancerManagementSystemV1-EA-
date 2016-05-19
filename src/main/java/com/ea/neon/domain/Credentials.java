@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -32,7 +33,7 @@ public class Credentials implements Serializable {
 	@OneToOne(mappedBy = "credentials", fetch = FetchType.EAGER)
 	private User user;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "credentials")
 	private Authority authority;
 

@@ -246,7 +246,7 @@
 												<c:if
 													test="${(project.status.projectStatus == 'PENDING') || (project.status.projectStatus == 'CALL_FOR_INTERVIEW')}">
 													<a
-														href='<spring:url value="/project/hireFreelancer.html?f_id=${freelancer.id}&&p_id=${project.id}"/>'
+														href='<spring:url value="/projects/hireFreelancer.html?f_id=${freelancer.id}&&p_id=${project.id}"/>'
 														class="btn btn-primary">Hire</a>
 												</c:if>
 											</div>

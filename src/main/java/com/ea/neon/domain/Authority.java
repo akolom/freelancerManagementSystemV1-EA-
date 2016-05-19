@@ -3,10 +3,8 @@ package com.ea.neon.domain;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Authority implements Serializable {
@@ -19,14 +17,12 @@ public class Authority implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
 	private String name;
 
 	private boolean enabled;
 
 	private String role;
-
-	@OneToOne(mappedBy = "authority", fetch = FetchType.LAZY)
-	private Credentials credentials;
 
 	public Integer getId() {
 		return id;
@@ -42,14 +38,6 @@ public class Authority implements Serializable {
 
 	public void setRole(String role) {
 		this.role = role;
-	}
-
-	public Credentials getCredentials() {
-		return credentials;
-	}
-
-	public void setCredentials(Credentials credentials) {
-		this.credentials = credentials;
 	}
 
 	public String getName() {

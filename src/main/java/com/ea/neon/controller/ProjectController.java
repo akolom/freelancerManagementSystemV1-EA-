@@ -35,7 +35,7 @@ import com.ea.neon.service.StatusService;
 import com.ea.neon.service.UserService;
 
 @Controller
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectController {
 
 	@Autowired

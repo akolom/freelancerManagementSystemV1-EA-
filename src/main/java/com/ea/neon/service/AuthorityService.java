@@ -10,4 +10,8 @@ public interface AuthorityService {
 
 	public List<Authority> findAll();
 
+	public Authority findOneById(Integer id);
+
+	public Authority findOneByName(String name);
+
 }

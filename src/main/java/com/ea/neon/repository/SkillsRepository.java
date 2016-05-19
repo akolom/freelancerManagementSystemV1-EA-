@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.ea.neon.domain.Experience;
 import com.ea.neon.domain.Skills;
 import com.ea.neon.domain.Skills.SkillTitle;
 

@@ -48,7 +48,6 @@
 			<label for="authority" class="">Sign up as:
 				Employer/Freelancer</label>
 
-
 			<form:select path="credentials.authority.name" items="${authority}"
 				itemLabel="name" itemValue="name"></form:select>
  
