@@ -51,6 +51,6 @@
 			</p>
 		</div>
 	</div>
-
+	<%@ include file="/WEB-INF/import/footer.jsp"%>
 </body>
 </html>

@@ -11,6 +11,33 @@
 <%@ include file="/WEB-INF/import/links.jsp"%>
 </head>
 <body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+				aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="<spring:url value="#"/>">NEON</a>
+		</div>
+
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+
+
+				<li><a href="#">Profile</a></li>
+
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+	</div>
+	</nav>
+	<br>
+	<br>
+	<br>	
 
 	<div class="container">
 		<div class="row">
@@ -152,6 +179,8 @@
 			</div>
 		</div>
 	</div>
+	<%@ include file="/WEB-INF/import/footer.jsp"%>
+
 
 	<script type="text/javascript">
 		$(document).ready(function() {

@@ -52,7 +52,7 @@ public class EmployerController {
 		employer.setProject(projects);
 		model.addAttribute("currentUser", employer);
 		model.addAttribute("categories", categoryService.findAll());
-		model.addAttribute("skills", skillService.findAll());
+		model.addAttribute("skills", skillService.findAll());demoEmployerProfile
 		return "demoEmployerProfile";
 	}
 
