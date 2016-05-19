@@ -21,6 +21,8 @@ public class Authority implements Serializable {
 	private Integer id;
 	private String name;
 
+	private boolean enabled;
+
 	private String role;
 
 	@OneToOne(mappedBy = "authority", fetch = FetchType.LAZY)
@@ -56,6 +58,14 @@ public class Authority implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }

@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ea.neon.domain.User;
 import com.ea.neon.service.AuthorityService;
-import com.ea.neon.service.CredentialService;
 import com.ea.neon.service.UserService;
 
 @Controller
 public class SignUpController {
-
-	@Autowired
-	private CredentialService credentialsService;
 
 	@Autowired
 	private UserService userService;

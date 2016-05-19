@@ -8,7 +8,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,6 +81,12 @@ public class InitServiceImpl {
 		credential.setVerifyPassword("steve");
 		credential.setUserName("steve");
 
+		Credentials credential2 = new Credentials();
+		credential2.setAuthority(authority2);
+		credential2.setPassword("steve");
+		credential2.setVerifyPassword("steve");
+		credential2.setUserName("steve");
+
 		Credentials admin = new Credentials();
 		admin.setUserName("admin");
 		admin.setPassword("admin");
@@ -92,19 +97,12 @@ public class InitServiceImpl {
 		profile.setProfessionalHeadLine("I am an employer. I will post my projects for freelancers");
 		profile.setProfileSummary("This is a test profile of an employer.");
 
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-		Credentials credentials = new Credentials();
-		credentials.setUserName("employer");
-		credentials.setPassword(encoder.encode("employer"));
-		credentials.setAuthority(authority);
-
 		User employer = new Employer();
 		employer.setFirstName("employer");
 		employer.setLastName("employer");
 		employer.setEmail("employer@gmail.com");
 		employer.setProfile(profile);
-		employer.setCredentials(credentials);
+		employer.setCredentials(credential);
 
 		userRepo.save(employer);
 
@@ -112,37 +110,28 @@ public class InitServiceImpl {
 		user.setFirstName("steve");
 		user.setLastName("james");
 		user.setEmail("jobs@gmail.com");
-		user.setCredentials(credential);
+		user.setCredentials(credential2);
 
 		userRepo.save(user);
-
-		Credentials credential2 = new Credentials();
-		credential2.setAuthority(authority2);
-		credential2.setPassword("sean");
-		credential2.setVerifyPassword("sean");
-		credential2.setUserName("sean");
 
 		User user2 = new Freelancer();
 		user2.setFirstName("sean");
 		user2.setLastName("miki");
 		user2.setEmail("seanmiki@gmail.com");
-		user2.setCredentials(credential2);
 		userRepo.save(user2);
-
-		Credentials credential3 = new Credentials();
-		credential3.setAuthority(authority3);
-		credential3.setPassword("michael");
-		credential3.setVerifyPassword("michael");
-		credential3.setUserName("michael");
 
 		User user3 = new Freelancer();
 		user3.setFirstName("Michael");
 		user3.setLastName("Sami");
 		user3.setEmail("michael@gmail.com");
-		user3.setCredentials(credential3);
 		userRepo.save(user3);
 
-		userRepo.save(user);
+		User adminUser = new Freelancer();
+		adminUser.setFirstName("admin");
+		adminUser.setLastName("admin");
+		adminUser.setEmail("admin@gmail.com");
+		adminUser.setCredentials(admin);
+		userRepo.save(adminUser);
 
 		Skills skillsAndroid = new Skills();
 		skillsAndroid.setSkillTitle(SkillTitle.ANDROID);
