@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
+/**
+ * @author Sabeen
+ * */
 
 @Component("messageSender")
 public class ApplySender implements MessageSender{
@@ -19,6 +22,11 @@ public class ApplySender implements MessageSender{
 	@Qualifier("jmsTemplate")
 	private JmsTemplate jmsTemplate;
 
+	
+	
+	/* 
+	 * method to send call sender to send message to broker
+	 */
 	public void sendMessage(final Object message) {
 		this.jmsTemplate.send(new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {

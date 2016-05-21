@@ -153,8 +153,8 @@
 			</div>
 			<div class="col-lg-4">
 				<div class="row center-block">
-					<a href='<spring:url value="/employer/editProfile.html"/>'
-						class="btn btn-primary">Edit Profile</a> <br> <br>
+					<%-- <a href='<spring:url value="/employer/editProfile.html"/>'
+						class="btn btn-primary">Edit Profile</a> <br> <br> --%>
 				</div>
 				<div class="row center-block">
 					<a href='<spring:url value="/projects/freelancer_project.html"/>'

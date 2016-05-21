@@ -110,6 +110,17 @@ public class ProjectController {
 		return "redirect:/email/forHiring.html?f_id=" + freelancerId + "&&p_id=" + projectId;
 	}
 
+	/**
+	 * method to get get all the list of projects which is not applied by
+	 * current user and bind to freelancer's project page. Uses principal object
+	 * to get username of current user(freelancer)
+	 * 
+	 * @param model
+	 *            object for sending attributes to jsp
+	 * @param principal
+	 *            object to get username of current user
+	 * @return name of jsp page showing projects
+	 */
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public String listProjects(Model model, Principal principal) {
 		Freelancer freelancer = userService.findFreelancerByUserName(principal.getName());
@@ -119,6 +130,18 @@ public class ProjectController {
 		return "project_read";
 	}
 
+	/**
+	 * method to get all the applied project list by Freelancer, also showing
+	 * status pending, declined accepted, calledForInterview of particular
+	 * project. Uses principal object to get username of current
+	 * user(freelancer)
+	 * 
+	 * @param model
+	 *            object for sending attributes to jsp
+	 * @param principal
+	 *            object to get username of current user
+	 * @return jsp page showing all applied projects
+	 */
 	@RequestMapping(value = "/freelancer_project", method = RequestMethod.GET)
 	public String freelancerProject(Model mode, Principal principal) {
 		Freelancer freelancer = userService.findFreelancerByUserName(principal.getName());
@@ -131,6 +154,18 @@ public class ProjectController {
 		return new ProjectSearchDTO();
 	}
 
+	/**
+	 * method which is called when freelancer applies for a project. uses
+	 * ProjectAppyDTO to set freelancer and project. uses MessageSender
+	 * Interface to send message(Object) to queue of Broker.Uses principal
+	 * object to get username of current user(freelancer).
+	 * 
+	 * @param id
+	 *            selected project's id from jsp
+	 * @param principal
+	 *            object to get username of current user
+	 * @return redirection to freelancer_project jsp
+	 */
 	@RequestMapping(value = "/applyProject", method = RequestMethod.GET)
 	public String applyProject(@RequestParam Integer id, Principal principal) {
 
@@ -144,6 +179,21 @@ public class ProjectController {
 		return "redirect:freelancer_project.html";
 	}
 
+	/**
+	 * 
+	 * method to search project based on user search string. It takes the string
+	 * as a request paramter and calls Project Service to find all projects
+	 * which is not applied by freelancer and matches the string. Uses principal
+	 * object to get username of current user(freelancer).
+	 * 
+	 * @param model
+	 *            object for sending attributes to jsp
+	 * @param principal
+	 *            object to get username of current user
+	 * @param search
+	 *            typed string from jsp
+	 * @return jsp page for showing all projects
+	 */
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String searchProjects(Model model, @RequestParam String search, Principal principal) {
 		Freelancer freelancer = userService.findFreelancerByUserName(principal.getName());
@@ -154,6 +204,20 @@ public class ProjectController {
 		return "project_read";
 	}
 
+	/**
+	 * method which binds ProjectSeachDTO object with spring form, uses to model
+	 * to send attributes to view. Gets user selected filter and then calls
+	 * ProjectService to list all the project that matches the filter.Uses
+	 * principal object to get username of current user(freelancer).
+	 * 
+	 * @param model
+	 *            object for sending attributes to jsp
+	 * @param principal
+	 *            object to get username of current user
+	 * @param projectSearchDTO
+	 *            Model Attribute
+	 * @return jsp page for all projects
+	 */
 	@RequestMapping(value = "/filterSearch", method = RequestMethod.POST)
 	public String filterSearch(Model model, @ModelAttribute("projectSearch") ProjectSearchDTO projectSearchDTO,
 			Principal principal) {
@@ -175,6 +239,10 @@ public class ProjectController {
 		return "project_read";
 	}
 
+	/**
+	 * Binds the value coming from Spring Form for category to it's object from
+	 * database. Uses CategoryEditor inner class for this.
+	 **/
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(Category.class, new CategoryEditor(categoryService));
@@ -199,6 +267,11 @@ public class ProjectController {
 
 		}
 	}
+
+	/**
+	 * Binds the value coming from Spring Form for skills to it's object from
+	 * database.
+	 **/
 
 	@InitBinder
 	public void skillsBinder(ServletRequestDataBinder binder) {

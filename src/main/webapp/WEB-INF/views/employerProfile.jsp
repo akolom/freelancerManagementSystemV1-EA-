@@ -100,8 +100,8 @@
 			</div>
 			<div class="col-lg-4">
 				<div class="row center-block">
-					<a href='<spring:url value="/employer/editProfile.html"/>'
-						class="btn btn-primary">Edit Profile</a>
+					<%-- <a href='<spring:url value="/employer/editProfile.html"/>'
+						class="btn btn-primary">Edit Profile</a> --%>
 				</div>
 				<br> <br>
 				<div class="row">
