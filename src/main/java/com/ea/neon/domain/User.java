@@ -41,7 +41,7 @@ public class User implements Serializable {
 
 	private String lastName;
 
-	@EmptyOrSize(min=8,max=13,message="{EmptyOrSize}")
+
 	private String contact;
 	
 
