@@ -143,9 +143,9 @@ public class ProjectController {
 	 * @return jsp page showing all applied projects
 	 */
 	@RequestMapping(value = "/freelancer_project", method = RequestMethod.GET)
-	public String freelancerProject(Model mode, Principal principal) {
+	public String freelancerProject(Model model, Principal principal) {
 		Freelancer freelancer = userService.findFreelancerByUserName(principal.getName());
-		mode.addAttribute("listProject", projectService.findAllAppliedProjects(freelancer.getId()));
+		model.addAttribute("listProject", projectService.findAllAppliedProjects(freelancer.getId()));
 		return "freelancer_project";
 	}
 
@@ -269,10 +269,10 @@ public class ProjectController {
 	}
 
 	/**
-	 * Binds the value coming from Spring Form for skills to it's object from
-	 * database.
-	 **/
-
+	 * @param binder
+	 *            Binds the value coming from Spring Form for skills to it's
+	 *            object from database.
+	 */
 	@InitBinder
 	public void skillsBinder(ServletRequestDataBinder binder) {
 		binder.registerCustomEditor(List.class, "skills", new CustomCollectionEditor(List.class) {
