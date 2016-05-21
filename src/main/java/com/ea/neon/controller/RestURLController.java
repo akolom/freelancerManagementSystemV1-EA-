@@ -16,6 +16,12 @@ import com.ea.neon.dto.ProjectDTO;
 import com.ea.neon.service.CategoryService;
 import com.ea.neon.service.ProjectService;
 
+/**
+ * @author KESHAV
+ * 
+ *         Controller that deals with every rest requests.
+ *
+ */
 @Controller
 @RequestMapping("/rest")
 public class RestURLController {
@@ -25,13 +31,31 @@ public class RestURLController {
 
 	@Autowired
 	private ProjectService projectService;
-	
+
+	/**
+	 * This is rest method which is called to get list of skills to display in
+	 * spring form under certain category.
+	 * 
+	 * @param categoryId
+	 *            Id of category whose list of skills are being requested using
+	 *            rest.
+	 * @return json object of list of skills that are under the category with
+	 *         categoryId.
+	 */
 	@RequestMapping(value = "/getSkills/{cat_id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Skills> getSkills(@PathVariable("cat_id") Integer categoryId) {
 		Category category = categoryService.getCategoryById(categoryId);
 		return category.getSkills();
 	}
-	
+
+	/**
+	 * This is rest method called to get the project detail to display on spring
+	 * edit form.
+	 * 
+	 * @param projectId
+	 *            Id of project which is being requested for editing using rest.
+	 * @return json object of project according to projectId from database.
+	 */
 	@RequestMapping(value = "/getProject/{project_id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody ProjectDTO getProject(@PathVariable("project_id") Integer projectId) {
 		Project project = projectService.getProjectById(projectId);

@@ -1,0 +1,10 @@
+com.ea.neon.controller
+com.ea.neon.domain
+com.ea.neon.dto
+com.ea.neon.listener
+com.ea.neon.repository
+com.ea.neon.sender
+com.ea.neon.service
+com.ea.neon.service.email
+com.ea.neon.service.impl
+com.ea.neon.validation.aspect

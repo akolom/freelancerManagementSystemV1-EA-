@@ -36,6 +36,12 @@ import com.ea.neon.service.SkillService;
 import com.ea.neon.service.StatusService;
 import com.ea.neon.service.UserService;
 
+/**
+ * @author KESHAV and SABEEN
+ * 
+ *         Controller to handle all project requests.
+ *
+ */
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
@@ -67,9 +73,20 @@ public class ProjectController {
 	@Autowired
 	private StatusService statusService;
 
+	/**
+	 * @author KESHAV
+	 * 
+	 *         This method updates the project and freelancers and set the
+	 *         project status as accepted project.
+	 * 
+	 * @param freelancerId
+	 *            Id of freelancer who is being hired.
+	 * @param projectId
+	 *            Id of project for which freelancer is being hired.
+	 * @return redirect link to send an email to the freelancer about hiring.
+	 */
 	@RequestMapping("/hireFreelancer")
-	public String hireFreelancer(@RequestParam("f_id") Integer freelancerId, @RequestParam("p_id") Integer projectId,
-			Model model) {
+	public String hireFreelancer(@RequestParam("f_id") Integer freelancerId, @RequestParam("p_id") Integer projectId) {
 
 		Project project = projectService.getProjectById(projectId);
 		Freelancer freelancer = (Freelancer) userService.findUserById(freelancerId);

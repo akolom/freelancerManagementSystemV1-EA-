@@ -33,6 +33,12 @@ import com.ea.neon.repository.UserRepository;
 import com.ea.neon.service.ProjectService;
 import com.ea.neon.service.UserService;
 
+/**
+ * @author KESHAV
+ * 
+ *         Service class to initialize data in database.
+ *
+ */
 @Service
 @Transactional
 public class InitServiceImpl {
@@ -61,6 +67,13 @@ public class InitServiceImpl {
 	@Autowired
 	private StatusRepository statusRepository;
 
+	/**
+	 * This method executes after finishing dependency injections and invoked
+	 * before any class is put into service.
+	 * 
+	 * This mehtod consist of many persistence level operations to save initial
+	 * data to databse.
+	 */
 	@PostConstruct
 	public void init() {
 

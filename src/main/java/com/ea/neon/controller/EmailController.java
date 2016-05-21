@@ -20,6 +20,12 @@ import com.ea.neon.service.StatusService;
 import com.ea.neon.service.UserService;
 import com.ea.neon.service.email.EmailService;
 
+/**
+ * @author KESHAV
+ * 
+ *         Controller class for email sending Sends email when employer invites
+ *         freelancer for interview or hire the freelancer
+ */
 @Controller
 @RequestMapping("/email")
 public class EmailController {
@@ -36,6 +42,18 @@ public class EmailController {
 	@Autowired
 	private StatusService statusService;
 
+	/**
+	 * Handles sending email for an interview to freelancer.
+	 * 
+	 * @param freelancerId
+	 *            Id of freelancer who is being invited for interview.
+	 * @param projectId
+	 *            Id of project for which freelancer is being invited for
+	 *            interview.
+	 * @param model
+	 *            Object on which data from database is set as attributes.
+	 * @return redirect link to employer's profile
+	 */
 	@RequestMapping("/forInterview")
 	public String sendInterviewEmail(@RequestParam("f_id") Integer freelancerId,
 			@RequestParam("p_id") Integer projectId, Model model) {
@@ -57,6 +75,17 @@ public class EmailController {
 		return "redirect:/employer/profile.html";
 	}
 
+	/**
+	 * Handles sending hiring email to freelancer.
+	 * 
+	 * @param freelancerId
+	 *            Id of freelancer who is being hired.
+	 * @param projectId
+	 *            Id of project for which freelancer is being hired.
+	 * @param model
+	 *            Object on which data from database is set as attributes.
+	 * @return redirect link to employer's profile
+	 */
 	@RequestMapping("/forHiring")
 	public String sendHiringEmail(@RequestParam("f_id") Integer freelancerId, @RequestParam("p_id") Integer projectId,
 			Model model) {

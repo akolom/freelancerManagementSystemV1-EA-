@@ -35,6 +35,12 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import com.ea.neon.domain.Freelancer;
 import com.ea.neon.domain.Project;
 
+/**
+ * @author KESHAV
+ * 
+ *         Service class to send an email.
+ *
+ */
 @Service("emailService")
 public class EmailService {
 
@@ -48,10 +54,20 @@ public class EmailService {
 	@Autowired
 	private SpringTemplateEngine templateEngine;
 
-	/*
-	 * Send HTML mail (simple)
+	/**
+	 * This method sends an interview invitation email to freelancer.
+	 * 
+	 * @param freelancer
+	 *            Freelancer who is invited for interview.
+	 * @param project
+	 *            Project for which freelancer is being invited for interview.
+	 * @param locale
+	 *            Locale represents a specific geographical, political, or
+	 *            cultural region.
+	 * @throws MessagingException
+	 *             Throws Messaging exception if the email fails to send to
+	 *             freelancer email address.
 	 */
-
 	public void sendInterviewInvitation(final Freelancer freelancer, final Project project, final Locale locale)
 			throws MessagingException {
 
@@ -77,6 +93,20 @@ public class EmailService {
 		this.mailSender.send(mimeMessage);
 	}
 
+	/**
+	 * This method returns hiring email to freelancer.
+	 * 
+	 * @param freelancer
+	 *            Freelancer who is hired for the project.
+	 * @param project
+	 *            Project for which freelancer is being invited for interview.
+	 * @param locale
+	 *            Locale represents a specific geographical, political, or
+	 *            cultural region.
+	 * @throws MessagingException
+	 *             Throws Messaging exception if the email fails to send to
+	 *             freelancer email address.
+	 */
 	public void sendHiringEmail(Freelancer freelancer, Project project, Locale locale) throws MessagingException {
 		final Context thymeContext = new Context(locale);
 		thymeContext.setVariable("name", freelancer.getFirstName() + " " + freelancer.getLastName());
